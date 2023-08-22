@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { FiMenu, FiShoppingBag, FiUser } from "react-icons/fi";
-import CustomButton from "../shared/CustomButton";
+import { FiMenu, FiShoppingBag } from "react-icons/fi";
 import CustomIconButton from "../shared/CustomIconButton";
 import Navbar from "./Navbar";
 
-import classNames from "classnames/bind";
 import styles from "@/styles/CustomHeader.module.scss";
+import classNames from "classnames/bind";
 
 const scss = classNames.bind(styles);
 
@@ -15,7 +14,7 @@ function CustomHeader() {
 
     useEffect(() => {
         const handleScroll = () => {
-            setScrolled(window.scrollY >= 40);
+            setScrolled(window.scrollY > 0);
         };
 
         window.addEventListener("scroll", handleScroll);
@@ -41,31 +40,19 @@ function CustomHeader() {
     };
 
     return (
-        <header>
-            <div className={scss("topnav", scrolled ? "sticky" : null)}>
-                <span>Promotion Information Here</span>
-            </div>
+        <header className={scss("header", scrolled ? "sticky" : null)}>
+            <div className={scss("logo")}>Acessories</div>
 
-            <div className={scss("botnav", scrolled ? "sticky" : null)}>
-                <div className={scss("left")}>
-                    <div className={scss("hamburger")}>
-                        <CustomIconButton icon={<FiMenu />} onClick={handleToggleNavbar} />
-                    </div>
+            <div className={scss("content")}>
+                <div className={scss("navbar")}>
                     <Navbar isOpening={isOpenNavbar} onToggleNavbar={handleToggleNavbar} />
                 </div>
-
-                <div className={scss("center")}>
-                    <div className={scss("logo")}>Acessories</div>
+                <div className={scss("cart")}>
+                    <CustomIconButton quantity={10} icon={<FiShoppingBag />} />
                 </div>
-
-                <ul className={scss("right")}>
-                    <li className={scss("login")}>
-                        <CustomButton content={"Login"} color={"transparent"} icon={<FiUser />} />
-                    </li>
-                    <li className={scss("cart")}>
-                        <CustomIconButton quantity={10} icon={<FiShoppingBag />} />
-                    </li>
-                </ul>
+                <div className={scss("hamburger")}>
+                    <CustomIconButton icon={<FiMenu />} onClick={handleToggleNavbar} />
+                </div>
             </div>
         </header>
     );

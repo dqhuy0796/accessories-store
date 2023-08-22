@@ -6,6 +6,8 @@
     --background-secondary-color: #f6f8fa;
     --shadow-color: #dedede;
     --border-color: #eaeaea;
+
+    --primary-color: #ff9999;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -38,8 +40,8 @@ html {
 body {
     font-size: 1.6rem;
     font-weight: 400;
-    /* font-family: "Cormorant Infant", serif; */
     font-family: "Roboto", sans-serif;
+    font-family: "Cormorant Infant", serif;
     color: var(--foreground-primary-color);
     background-color: var(--background-primary-color);
     overflow-y: overlay;

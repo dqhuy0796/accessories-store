@@ -1,49 +1,50 @@
-import "@/styles/Navbar.css";
 import routes from "@/configs/routes";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { FiX, FiUser } from "react-icons/fi";
-import CustomButton from "../shared/CustomButton";
-import CustomIconButton from "../shared/CustomIconButton";
-function Navbar({ isOpening, onToggleNavbar }) {
-    const navbar = [
+import { Link } from "react-router-dom";
+//
+import styles from "@/styles/Navbar.module.scss";
+import classNames from "classnames/bind";
+
+const scss = classNames.bind(styles);
+function Navbar({ isOpening }) {
+    const menu = [
         {
             content: "Trang chủ",
             path: routes.home,
         },
         {
             content: "Sản phẩm",
-            path: routes.home,
+            path: routes.collections,
         },
         {
             content: "Bài viết",
-            path: routes.home,
+            path: routes.blogs,
         },
         {
             content: "Giới thiệu",
-            path: routes.home,
+            path: routes.about,
         },
         {
             content: "Liên hệ",
-            path: routes.home,
+            path: routes.contact,
         },
     ];
 
     return (
-        <nav className={isOpening ? "navbar open" : "navbar"}>
-            <ul className="menu">
-                <li className="item hidden-on-pc">
-                    <CustomIconButton icon={<FiX />} onClick={onToggleNavbar} />
-
-                    <CustomButton content={"Đăng nhập"} icon={<FiUser />} />
-                </li>
-                {navbar.map((item, index) => (
-                    <li key={index} className="item">
-                        <Link to={item.path} className="navlink">
+        <nav className={scss("navbar", isOpening ? "open" : null)}>
+            <ul className={scss("menu")}>
+                {menu.map((item, index) => (
+                    <li key={index} className={scss("item")}>
+                        <Link to={item.path} className={scss("navlink")}>
                             {item.content}
                         </Link>
                     </li>
                 ))}
+                <li className={scss("item")}>
+                    <Link to={routes.login} className={scss("navlink")}>
+                        <span>Đăng nhập</span>
+                    </Link>
+                </li>
             </ul>
         </nav>
     );

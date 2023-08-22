@@ -1,4 +1,4 @@
-function LeftSlideModal() {
+function LeftSlideModalLayout() {
     return (
         <div>
             <p>Left slide modal</p>
@@ -6,4 +6,4 @@ function LeftSlideModal() {
     );
 }
 
-export default LeftSlideModal;
+export default LeftSlideModalLayout;
