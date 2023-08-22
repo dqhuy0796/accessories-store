@@ -1,0 +1,46 @@
+.custom-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    column-gap: 8px;
+    padding: 8px 12px;
+    min-width: 80px;
+    max-width: 200px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    color: var(--background-primary-color);
+    background-color: var(--foreground-primary-color);
+}
+.custom-button:hover {
+    box-shadow: 0 0 4px 1px var(--shadow-color);
+}
+.custom-button.transparent {
+    color: var(--foreground-primary-color);
+    background-color: transparent;
+}
+
+/* children */
+.custom-button .text {
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1;
+}
+.custom-button .icon {
+    position: relative;
+    font-size: 2rem;
+    top: 2px;
+}
+.custom-button .quantity {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateX(15%) translateY(-15%);
+    padding: 1px 3px;
+    font-size: 1.4rem;
+    color: var(--background-primary-color);
+    background-color: var(--foreground-primary-color);
+    border-radius: 99px;
+}

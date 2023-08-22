@@ -1,0 +1,89 @@
+.topnav {
+    padding: 20px;
+    max-height: fit-content;
+    color: var(--background-primary-color);
+    background-color: var(--foreground-primary-color);
+    text-align: center;
+    transition: ease 0.3s;
+    overflow: hidden;
+}
+
+.topnav.sticky {
+    position: fixed;
+    z-index: 99;
+    top: 0;
+    inset-inline: 0;
+    max-height: 0;
+    padding: 0;
+}
+
+.botnav {
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 99;
+    padding-block: 16px;
+    padding-inline: 8px;
+    background-color: var(--background-primary-color);
+    box-shadow: 0 1px 4px 1px var(--shadow-color);
+    transition: top 0.3s;
+    overflow: hidden;
+}
+
+.botnav.sticky {
+    position: fixed;
+    top: 0;
+    inset-inline: 0;
+}
+
+.botnav .left {
+    flex: 1;
+}
+
+.botnav .center {
+    flex: 2;
+    text-align: center;
+}
+
+.botnav .right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+}
+.search input {
+    width: 100%;
+    font-size: 1.6rem;
+    font-weight: 500;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #000;
+    outline: none;
+    background-color: red;
+}
+.search.show input {
+    position: absolute;
+    z-index: 99;
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+
+.login {
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .login {
+        display: block;
+    }
+    .hamburger {
+        display: none;
+    }
+}
