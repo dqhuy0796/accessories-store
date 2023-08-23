@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { FiMenu, FiShoppingBag } from "react-icons/fi";
 import CustomIconButton from "../shared/CustomIconButton";
+import routes from "@/configs/routes";
 import Navbar from "./Navbar";
 
 import styles from "@/styles/CustomHeader.module.scss";
 import classNames from "classnames/bind";
+import { useLocation } from "react-router-dom";
 
 const scss = classNames.bind(styles);
 
@@ -39,8 +41,10 @@ function CustomHeader() {
         setOpenNavbar(!isOpenNavbar);
     };
 
+    const isHomepage = useLocation().pathname === routes.home;
+
     return (
-        <header className={scss("header", scrolled ? "sticky" : null)}>
+        <header className={scss("header", isHomepage ? "transparent" : null, scrolled ? "sticky" : null)}>
             <div className={scss("logo")}>Acessories</div>
 
             <div className={scss("content")}>
@@ -59,10 +63,3 @@ function CustomHeader() {
 }
 
 export default CustomHeader;
-
-{
-    /* <li className={showSearchBar ? "search show" : "search"}>
-<input type="text" placeholder="Tìm kiếm sản phẩm..." />
-<CustomIconButton icon={<FiSearch />} onClick={handleToggleSearchBar} />
-</li> */
-}

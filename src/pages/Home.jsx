@@ -1,7 +1,9 @@
+import CustomSlickBanner from "../components/partials/CustomSlickBanner";
+
 function Home() {
     return (
         <div>
-            <p>Tieu de trang: Home</p>
+            <CustomSlickBanner />
         </div>
     );
 }
