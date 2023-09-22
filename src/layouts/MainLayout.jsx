@@ -1,15 +1,15 @@
 import PropTypes from "prop-types";
 import CustomHeader from "@/components/partials/CustomHeader";
 import CustomFooter from "@/components/partials/CustomFooter";
-import Breadcrumb from "@/components/partials/Breadcrumb";
-import "@/styles/MainLayout.css";
+import routes from "@/configs/routes";
+import { useLocation } from "react-router-dom";
 function MainLayout({ children }) {
+    const isHomepage = useLocation().pathname === routes.home;
+
     return (
-        <div>
+        <div className="w-full">
             <CustomHeader />
-            <h3>Main Layout</h3>
-            <Breadcrumb />
-            <div className="container">{children}</div>
+            <div className="min-h-screen">{children}</div>
             <CustomFooter />
         </div>
     );
