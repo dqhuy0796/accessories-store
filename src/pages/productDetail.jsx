@@ -1,6 +1,15 @@
 import React from "react";
 import ProductCard from "../components/partials/ProductCard";
-import {TruckIcon, StarIcon, HandThumbUpIcon, ShieldCheckIcon, SparklesIcon, CheckBadgeIcon, GifIcon, ChartBarIcon} from '@heroicons/react/24/outline'
+import {
+    TruckIcon,
+    StarIcon,
+    HandThumbUpIcon,
+    ShieldCheckIcon,
+    SparklesIcon,
+    CheckBadgeIcon,
+    GifIcon,
+    ChartBarIcon,
+} from "@heroicons/react/24/outline";
 
 import {
     Accordion,
@@ -13,7 +22,6 @@ import {
     Typography,
 } from "@material-tailwind/react";
 
-
 function productDetail() {
     const reservstion = [
         {
@@ -22,20 +30,20 @@ function productDetail() {
         },
         {
             icon: <StarIcon />,
-            text: "Ship COD & FREESHIP đơn hàng từ 150K",
+            text: "Bền màu & thân thiện với làn da",
         },
         {
             icon: <HandThumbUpIcon />,
-            text: "Ship COD & FREESHIP đơn hàng từ 150K",
+            text: "Đảm bảo chính hãng hoặc hoàn tiền tới 300%",
         },
         {
             icon: <ShieldCheckIcon />,
-            text: "Ship COD & FREESHIP đơn hàng từ 150K",
+            text: "Bảo hành, đổi mới sản phẩm trong 7 ngày",
         },
 
         {
             icon: <SparklesIcon />,
-            text: "Ship COD & FREESHIP đơn hàng từ 150K",
+            text: "100,000+ khách hàng hài lòng",
         },
     ];
 
@@ -152,7 +160,7 @@ function productDetail() {
             text: "Ship COD & FREESHIP đơn hàng từ 150K",
         },
         {
-            icon: <ChartBarIcon/>,
+            icon: <ChartBarIcon />,
             title: "HỖ TRỢ NHIỆT TÌNH",
             text: "Ship COD & FREESHIP đơn hàng từ 150K",
         },
@@ -161,15 +169,15 @@ function productDetail() {
     const productDesc = [
         {
             id: 1,
-            title: 'Mô tả',
-            desc: 'Bông tai Jane đính ngọc trai nước ngọt, mang đến vẻ đẹp cao quý, trong sáng và thánhthiện. Sản phẩm được nhiều phái đẹp yêu thích là do nó vừa mang sự nhẹ nhàng, thanh nhã nữ tính vừa mang nét mạnh mẽ, kiêu kỳ. Bông tai Jane sẽ tôn vinh vẻ đẹp thân thiện, dịu dàng, từ đó dễ dàng lấy được thiện cảm từ những người xung quanh cho các cô gái.'
+            title: "Mô tả",
+            desc: "Bông tai Jane đính ngọc trai nước ngọt, mang đến vẻ đẹp cao quý, trong sáng và thánhthiện. Sản phẩm được nhiều phái đẹp yêu thích là do nó vừa mang sự nhẹ nhàng, thanh nhã nữ tính vừa mang nét mạnh mẽ, kiêu kỳ. Bông tai Jane sẽ tôn vinh vẻ đẹp thân thiện, dịu dàng, từ đó dễ dàng lấy được thiện cảm từ những người xung quanh cho các cô gái.",
         },
         {
             id: 2,
-            title: 'Sử dụng & Bảo quản',
-            desc: 'Được làm từ những chất liệu cao cấp và bền bỉ nhưng do đặc tính cơ bản của chất liệu, Junie khuyến khích khách hàng nên tuân theo các nguyên tắc bảo quản trang sức nói chung. Nên tháo trang sức ra trước khi tiếp xúc với bất kỳ môi trường ẩm hoặc ma sát mạnh (vd:rửa tay, đi ngủ, tắm rửa,...) để đảm bảo và duy trì độ bóng của sản phẩm cũng như kéo dài tuổi thọ của sản phẩm.'
-        }
-    ]
+            title: "Sử dụng & Bảo quản",
+            desc: "Được làm từ những chất liệu cao cấp và bền bỉ nhưng do đặc tính cơ bản của chất liệu, Junie khuyến khích khách hàng nên tuân theo các nguyên tắc bảo quản trang sức nói chung. Nên tháo trang sức ra trước khi tiếp xúc với bất kỳ môi trường ẩm hoặc ma sát mạnh (vd:rửa tay, đi ngủ, tắm rửa,...) để đảm bảo và duy trì độ bóng của sản phẩm cũng như kéo dài tuổi thọ của sản phẩm.",
+        },
+    ];
 
     const { name, price, rating, category, color, material, discount, quantity, sold } = productData;
 
@@ -230,8 +238,8 @@ function productDetail() {
                     </div>
                     <ul className="border border-gray-700 rounded-lg p-4 grid gap-3">
                         {reservstion.map((item) => (
-                            <li key={item.id} className="list-none flex">
-                                <Typography as={"h4"} className="text-lg">
+                            <li key={item.id} className="grid place-items-start">
+                                <Typography as={"h4"} className="text-sm ml-6">
                                     {item.icon}
                                 </Typography>
                                 <Typography as={"h4"} className="text-sm ml-6">
@@ -257,16 +265,12 @@ function productDetail() {
             <div className="px-6 mt-2">
                 <div>
                     {productDesc.map((item) => (
-
-                    <Accordion key={item.id} open={open === item.id} icon={<Icon id={item.id} open={open} />}>
-                        <AccordionHeader onClick={() => handleOpen(item.id)}>{item.title}</AccordionHeader>
-                        <AccordionBody>
-                            <Typography>
-                                {item.desc}
-                            </Typography>
-                           
-                        </AccordionBody>
-                    </Accordion>
+                        <Accordion key={item.id} open={open === item.id} icon={<Icon id={item.id} open={open} />}>
+                            <AccordionHeader onClick={() => handleOpen(item.id)}>{item.title}</AccordionHeader>
+                            <AccordionBody>
+                                <Typography>{item.desc}</Typography>
+                            </AccordionBody>
+                        </Accordion>
                     ))}
                 </div>
                 <div className="py-9 px-6">

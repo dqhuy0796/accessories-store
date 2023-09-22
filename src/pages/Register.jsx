@@ -1,4 +1,7 @@
 import { Button, Card, Checkbox, Input, Typography } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
+import routes from "@/configs/routes";
+
 function Register() {
     return (
         <div className="h-screen grid md:grid-cols-2">
@@ -44,9 +47,9 @@ function Register() {
                             </Button>
                             <Typography color="gray" className="mt-4 text-center font-normal text-sm ">
                                 Bạn đã có tài khoản!{" "}
-                                <a href="#" className="font-medium text-blue-500">
+                                <Link to={routes.login} className="font-medium text-blue-500">
                                     Đăng nhập
-                                </a>
+                                </Link>
                             </Typography>
                         </form>
                     </Card>

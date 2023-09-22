@@ -141,7 +141,6 @@ function About() {
                         ))}
                     </TabsBody>
                 </Tabs>
-                ;
             </div>
         </div>
     );

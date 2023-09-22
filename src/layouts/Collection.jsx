@@ -143,9 +143,9 @@ function Collection({ category_id }) {
             </div>
             <div className="col-span-full lg:col-span-9">
                 <div className="hidden lg:block">
-                    <div className="grid grid-cols-4 gap-4">
+                    <div className="grid grid-cols-4 gap-4 mb-4">
                         <div className="col-span-3">
-                            <p>CLEARANCE SALE UPTO 80% TOÀN BỘ SẢN PHẨM - CHỈ CÓ TẠI ONLINE</p>
+                            <p>Các sản phẩm mới</p>
                         </div>
                         <div className="col-span-1">
                             <SelectFilter />

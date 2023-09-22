@@ -57,12 +57,12 @@ function CustomHeader() {
         <Navbar className="mx-auto py-2 px-4 lg:px-8 lg:py-4 rounded-none w-full">
             <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
                 <Typography as="a" href="#" className="text-xl mr-4 cursor-pointer py-1.5 font-medium">
-                    Accessories 
+                    Accessories
                 </Typography>
                 <div className="flex items-center gap-6">
                     <div className="hidden lg:block">{navList}</div>
                     <div className="flex items-center justify-center">
-                        <Badge content="5" withBorder>
+                        <Badge content={5}>
                             <IconButton variant="text">
                                 <ShoppingBagIcon className="h-8 w-8" />
                             </IconButton>

@@ -1,6 +1,11 @@
 import { Button, Card, Input, Typography } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
+import routes from "@/configs/routes";
 
 function Login() {
+
+  
+
     return (
         <div className="h-screen grid md:grid-cols-2">
                 <div className="h-full hidden md:block">
@@ -31,9 +36,9 @@ function Login() {
                             </Button>
                             <Typography color="gray" className="mt-4 text-center text-sm font-normal">
                                 Bạn chưa có tài khoản!{" "}
-                                <a href="#" className="font-medium text-blue-500">
+                                <Link to={routes.register} className="font-medium text-blue-500">
                                     Đăng ký
-                                </a>
+                                </Link>
                             </Typography>
                         </form>
                     </Card>

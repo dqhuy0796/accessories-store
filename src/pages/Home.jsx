@@ -13,7 +13,6 @@ function Home() {
         const response = await productService.getProductsService(categories, page);
         if (response && response.code === "SUCCESS") {
             const { page, total_pages, total_results, result } = response;
-            console.log(response);
             setProducts(result);
             setCurrentPage(Number(page));
             setTotalPages(Number(total_pages));
@@ -28,7 +27,7 @@ function Home() {
     return (
         <div>
             <CustomSlickBanner />
-            <div className="grid grid-cols-6 gap-4">
+            <div className="grid grid-cols-5 gap-4">
                 {products?.map((item, index) => (
                     <ProductCard  data={item} key={index} />
                 ))}
