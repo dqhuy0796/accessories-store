@@ -9,6 +9,8 @@ const routes = {
     contact: "/contact",
     register: "/register",
     login: "/login",
+    cart: "/cart",
+    productDetail: "/productDetail",
     // private (only valid when logged in)
     profile: "/profile",
     profileUpdate: "/profile/update",

@@ -1,64 +1,108 @@
-import { useEffect, useState } from "react";
-import { FiMenu, FiShoppingBag } from "react-icons/fi";
-import CustomIconButton from "../shared/CustomIconButton";
 import routes from "@/configs/routes";
-import Navbar from "./Navbar";
+import { ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
 
-import styles from "@/styles/CustomHeader.module.scss";
-import classNames from "classnames/bind";
-import { useLocation } from "react-router-dom";
+import { Badge, Collapse, IconButton } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
-const scss = classNames.bind(styles);
+import { Navbar, Typography } from "@material-tailwind/react";
 
 function CustomHeader() {
-    const [scrolled, setScrolled] = useState(false);
-    const [isOpenNavbar, setOpenNavbar] = useState(false);
+    const menu = [
+        {
+            content: "Trang chủ",
+            path: routes.home,
+        },
+        {
+            content: "Sản phẩm",
+            path: routes.collections,
+        },
+        {
+            content: "Bài viết",
+            path: routes.blogs,
+        },
+        {
+            content: "Giới thiệu",
+            path: routes.about,
+        },
+        {
+            content: "Liên hệ",
+            path: routes.contact,
+        },
+        {
+            content: "Đăng nhập",
+            path: routes.login,
+        },
+    ];
+
+    const [openNav, setOpenNav] = useState(false);
 
     useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 0);
-        };
-
-        window.addEventListener("scroll", handleScroll);
-
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
+        window.addEventListener("resize", () => window.innerWidth >= 960 && setOpenNav(false));
     }, []);
 
-    // useEffect(() => {
-    //     const originalOverflow = document.body.style.overflow;
-    //     const isMobile = window.innerWidth < 768;
-
-    //     document.body.style.overflow = isOpenNavbar && isMobile ? "hidden" : "auto";
-
-    //     return () => {
-    //         document.body.style.overflow = originalOverflow;
-    //     };
-    // }, [isOpenNavbar]);
-
-    const handleToggleNavbar = () => {
-        setOpenNavbar(!isOpenNavbar);
-    };
-
-    const isHomepage = useLocation().pathname === routes.home;
+    const navList = (
+        <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+            {menu.map((item, index) => (
+                <Typography key={index} as="li" variant="small" color="blue-gray" className="p-1 font-normal">
+                    <Link to={item.path} className="flex items-center text-base uppercase">
+                        {item.content}
+                    </Link>
+                </Typography>
+            ))}
+        </ul>
+    );
 
     return (
-        <header className={scss("header", isHomepage ? "transparent" : null, scrolled ? "sticky" : null)}>
-            <div className={scss("logo")}>Acessories</div>
-
-            <div className={scss("content")}>
-                <div className={scss("navbar")}>
-                    <Navbar isOpening={isOpenNavbar} onToggleNavbar={handleToggleNavbar} />
-                </div>
-                <div className={scss("cart")}>
-                    <CustomIconButton quantity={10} icon={<FiShoppingBag />} />
-                </div>
-                <div className={scss("hamburger")}>
-                    <CustomIconButton icon={<FiMenu />} onClick={handleToggleNavbar} />
+        <Navbar className="mx-auto py-2 px-4 lg:px-8 lg:py-4 rounded-none w-full">
+            <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
+                <Typography as="a" href="#" className="text-xl mr-4 cursor-pointer py-1.5 font-medium">
+                    Accessories 
+                </Typography>
+                <div className="flex items-center gap-6">
+                    <div className="hidden lg:block">{navList}</div>
+                    <div className="flex items-center justify-center">
+                        <Badge content="5" withBorder>
+                            <IconButton variant="text">
+                                <ShoppingBagIcon className="h-8 w-8" />
+                            </IconButton>
+                        </Badge>
+                    </div>
+                    <IconButton
+                        variant="text"
+                        className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
+                        ripple={false}
+                        onClick={() => setOpenNav(!openNav)}
+                    >
+                        {openNav ? (
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                className="h-6 w-6"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth={2}
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        ) : (
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-6 w-6"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth={2}
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        )}
+                    </IconButton>
                 </div>
             </div>
-        </header>
+            <Collapse open={openNav}>
+                <div className="container mx-auto">{navList}</div>
+            </Collapse>
+        </Navbar>
     );
 }
 
