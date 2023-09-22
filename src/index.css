@@ -55,6 +55,12 @@ body {
 
 /* SCROLLBAR */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* SCROLLBAR */
+
 @media (min-width: 768px) {
     html *::-webkit-scrollbar {
         border-radius: 0;
