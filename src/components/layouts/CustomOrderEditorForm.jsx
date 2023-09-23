@@ -1,18 +1,13 @@
-import { Avatar, Button, Input, Typography } from '@material-tailwind/react';
-import PropTypes from 'prop-types';
-import {
-    AddressSelection,
-    CustomCurrencyDisplay,
-    CustomEditor,
-    CustomSelectOption,
-    UserDetailsItem,
-} from '../partials';
-import CustomAvatarUpload from '../partials/custom-avatar-upload';
-import { useEffect, useState } from 'react';
 import { userService } from '@/services';
+import { Input, Typography } from '@material-tailwind/react';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { CustomCartProductCard, CustomShippingInfoCard } from '../cards';
-import CustomVoucherSubmit from '../partials/custom-voucher-submit';
+import CustomAddressSelection from '../partials/CustomAddressSelection';
+import CustomCartProductCard from '../cards/CustomCartProductCard';
+import CustomShippingInfoCard from '../cards/CustomShippingInfoCard';
+import CustomVoucherSubmitForm from './CustomVoucherSubmitForm';
+import CustomCurrencyDisplay from '../shared/CustomCurrencyDisplay';
 
 export function CustomOrderEditorForm({ data, isCreate, onChange }) {
     const [isLoading, setLoading] = useState(false);
@@ -102,10 +97,7 @@ export function CustomOrderEditorForm({ data, isCreate, onChange }) {
                                 onChange={(e) => onChange(item.key, e.target.value)}
                             />
                         ))}
-                        <AddressSelection
-                            address={data?.address}
-                            onChange={handleOnChangeAddress}
-                        />
+                        <CustomAddressSelection address={data?.address} onChange={handleOnChangeAddress} />
                     </div>
                 </div>
                 <div className="rounded-lg border border-blue-gray-100 p-4">
@@ -143,7 +135,7 @@ export function CustomOrderEditorForm({ data, isCreate, onChange }) {
                         Mã giảm giá
                     </Typography>
                     <div className="grid gap-4">
-                        <CustomVoucherSubmit />
+                        <CustomVoucherSubmitForm />
                     </div>
                 </div>
 
@@ -156,30 +148,21 @@ export function CustomOrderEditorForm({ data, isCreate, onChange }) {
                             <Typography className="text-sm font-medium text-gray-600 line-clamp-1">
                                 Tổng tiền sản phẩm:
                             </Typography>
-                            <CustomCurrencyDisplay
-                                className="text-base font-semibold"
-                                value={100000}
-                            />
+                            <CustomCurrencyDisplay className="text-base font-semibold" value={100000} />
                         </div>
 
                         <div className="flex items-baseline justify-between gap-4">
                             <Typography className="text-sm font-medium text-gray-600 line-clamp-1">
                                 Phí vận chuyển:
                             </Typography>
-                            <CustomCurrencyDisplay
-                                className="text-base font-semibold"
-                                value={100000}
-                            />
+                            <CustomCurrencyDisplay className="text-base font-semibold" value={100000} />
                         </div>
 
                         <div className="flex items-baseline justify-between gap-4">
                             <Typography className="text-sm font-medium text-gray-600 line-clamp-1">
                                 Mã giảm giá:
                             </Typography>
-                            <CustomCurrencyDisplay
-                                className="text-base font-semibold"
-                                value={100000}
-                            />
+                            <CustomCurrencyDisplay className="text-base font-semibold" value={100000} />
                         </div>
 
                         <hr className="border-t border-blue-gray-100"></hr>
@@ -188,10 +171,7 @@ export function CustomOrderEditorForm({ data, isCreate, onChange }) {
                             <Typography className="text-sm font-medium text-gray-600 line-clamp-1">
                                 Thành tiền:
                             </Typography>
-                            <CustomCurrencyDisplay
-                                className="text-lg font-semibold text-red-600"
-                                value={100000}
-                            />
+                            <CustomCurrencyDisplay className="text-lg font-semibold text-red-600" value={100000} />
                         </div>
                     </div>
                 </div>

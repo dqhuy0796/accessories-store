@@ -22,7 +22,7 @@ function CustomHeader() {
     const { isLogged, data: currentUser } = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const cartQuantity = useSelector((state) => state.cart.quantity);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 0);
@@ -47,13 +47,13 @@ function CustomHeader() {
     const handleLogout = () => {
         dispatch(logout());
         dispatch(cartItemRemoveAll());
-        navigate(routes.home)
+        navigate(routes.home);
     };
 
     const menu = [
         {
             title: 'bộ sưu tập',
-            path: routes.category,
+            path: routes.category.replace(':slug', 'all'),
         },
         {
             title: 'bài viết',

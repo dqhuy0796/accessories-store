@@ -3,16 +3,7 @@ import { login } from '@/redux/actions/userAction';
 import { routes } from '@/routes';
 import { authService } from '@/services';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
-import {
-    Button,
-    Card,
-    CardBody,
-    CardFooter,
-    Checkbox,
-    Input,
-    Spinner,
-    Typography,
-} from '@material-tailwind/react';
+import { Button, Card, CardBody, CardFooter, Checkbox, Input, Spinner, Typography } from '@material-tailwind/react';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -38,6 +29,37 @@ function Register() {
             ...prevState,
             [key]: value,
         }));
+    };
+    const handleOnChangeAddress = (key, value) => {
+        switch (key) {
+            case 'province':
+                handleOnChange('address', {
+                    ...data.address,
+                    province: value,
+                    district: '',
+                    ward: '',
+                });
+                break;
+            case 'district':
+                handleOnChange('address', {
+                    ...data.address,
+                    district: value,
+                    ward: '',
+                });
+                break;
+            case 'ward':
+                handleOnChange('address', {
+                    ...data.address,
+                    ward: value,
+                });
+                break;
+            default:
+                handleOnChange('address', {
+                    ...data.address,
+                    location: value,
+                });
+                break;
+        }
     };
 
     const handleSubmit = (e) => {
@@ -144,14 +166,9 @@ function Register() {
                                             label={item.label}
                                             value={userData[item.key] ?? ''}
                                             type={showPassword ? 'text' : 'password'}
-                                            onChange={(e) =>
-                                                handleOnChange(item.key, e.target.value)
-                                            }
+                                            onChange={(e) => handleOnChange(item.key, e.target.value)}
                                             icon={
-                                                <div
-                                                    className="cursor-pointer"
-                                                    onClick={handleToggleShowPassword}
-                                                >
+                                                <div className="cursor-pointer" onClick={handleToggleShowPassword}>
                                                     {showPassword ? (
                                                         <EyeIcon className="h-5 w-5" />
                                                     ) : (
@@ -167,16 +184,14 @@ function Register() {
                                             type={item.type}
                                             label={item.label}
                                             value={userData[item.key] ?? ''}
-                                            onChange={(e) =>
-                                                handleOnChange(item.key, e.target.value)
-                                            }
+                                            onChange={(e) => handleOnChange(item.key, e.target.value)}
                                         />
                                     ),
                                 )}
 
                                 <CustomAddressSelection
                                     address={userData.address ?? {}}
-                                    onChange={handleOnChange}
+                                    onChange={handleOnChangeAddress}
                                 />
 
                                 <Checkbox

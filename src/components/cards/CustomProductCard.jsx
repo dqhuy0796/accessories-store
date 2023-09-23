@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import CustomCurrencyDisplay from '../shared/CustomCurrencyDisplay';
 import { useDispatch } from 'react-redux';
 import { cartItemAdd } from '@/redux/actions/cartActions';
+import { Link } from 'react-router-dom';
+import { routes } from '@/routes';
 
-export function CustomProductCard({ data, onPreview, onUpdate, onDelete }) {
+export function CustomProductCard({ data }) {
     const dispatch = useDispatch();
 
     const handleAddToCart = (product) => {
@@ -33,7 +35,9 @@ export function CustomProductCard({ data, onPreview, onUpdate, onDelete }) {
                 </div>
             </div>
             <div className="flex flex-col items-center justify-center gap-2 p-2">
-                <Typography className="font-semibold">{data.name}</Typography>
+                <Link to={routes.productDetail.replace(':slug', data.slug)}>
+                    <Typography className="font-semibold hover:text-blue-600 hover:underline">{data.name}</Typography>
+                </Link>
                 <CustomCurrencyDisplay
                     className={'text-sm font-normal text-red-500'}
                     value={data.price}
@@ -58,36 +62,17 @@ CustomProductCard.propTypes = {
 
 const CustomProductCardSkeleton = () => {
     const className1 =
-        'mb-1 w-[calc(100%-20px)] animate-pulse rounded bg-blue-gray-200 text-[14px] text-transparent';
-    const className2 = 'animate-pulse rounded bg-blue-gray-400 text-[10px] text-transparent';
+        'w-[calc(100%-20px)] animate-pulse rounded bg-blue-gray-200 text-[14px] text-transparent';
+    const className2 =
+        'w-[calc(100%-20px)] animate-pulse rounded bg-blue-gray-400 text-[10px] text-transparent';
     return (
-        <div className="relative flex flex-wrap items-center gap-3 rounded-lg border border-blue-gray-100 p-3 shadow-lg md:flex-nowrap">
-            <div className="relative grid w-full grid-cols-4 gap-2 text-blue-gray-500 md:grid-cols-12 md:gap-3">
-                <div className="relative row-span-2 pt-[100%] md:col-span-1 md:row-span-1">
-                    <div className="absolute inset-0 animate-pulse overflow-hidden rounded bg-blue-gray-200"></div>
-                </div>
-
-                <div className="col-span-3 flex flex-col justify-center md:row-span-1">
-                    <Typography className={className1}>1</Typography>
-                    <Typography className={className2}>2</Typography>
-                </div>
-
-                <div className="col-span-3 flex flex-col justify-center md:col-span-2">
-                    <Typography className={className1}>1</Typography>
-                    <Typography className={className2}>2</Typography>
-                </div>
-
-                <div className="col-span-3 flex flex-col justify-center md:col-span-2">
-                    <Typography className={className1}>1</Typography>
-                    <Typography className={className2}>2</Typography>
-                </div>
-
-                {[1, 2, 3].map((item) => (
-                    <div key={item} className="flex flex-col justify-center text-center">
-                        <Typography className={className1}>1</Typography>
-                        <Typography className={className2}>2</Typography>
-                    </div>
-                ))}
+        <div className="">
+            <div className="group relative w-full overflow-hidden pt-[calc(100%*4/3)]">
+                <div className="absolute inset-0 -z-10 animate-pulse overflow-hidden rounded bg-blue-gray-200"></div>
+            </div>
+            <div className="grid place-items-center gap-2 p-2">
+                <div className={className1}>1</div>
+                <div className={className2}>2</div>
             </div>
         </div>
     );

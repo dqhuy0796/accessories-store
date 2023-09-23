@@ -59,11 +59,11 @@ export const getProductsService = async (categories, page) => {
     }
 };
 
-export const getProductByIdService = async (product_id) => {
+export const getProductBySlugService = async (slug) => {
     const path = 'product/get';
 
     const payload = {
-        product_id,
+        slug,
     };
 
     try {

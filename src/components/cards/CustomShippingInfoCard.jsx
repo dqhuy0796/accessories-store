@@ -1,12 +1,12 @@
 import { Radio, Typography } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
-import { CustomCurrencyDisplay } from '../partials';
+import CustomCurrencyDisplay from '../shared/CustomCurrencyDisplay';
 
 export function CustomShippingInfoCard({ fee, title }) {
     return (
         <div className="relative overflow-hidden rounded-lg border border-blue-gray-100 p-3 pl-12">
             <div className="absolute top-0.5 left-0.5">
-                <Radio size="6px" color="blue" value={title} defaultChecked/>
+                <Radio size="6px" color="blue" value={title} defaultChecked />
             </div>
 
             <div className="grid gap-2">

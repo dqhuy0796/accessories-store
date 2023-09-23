@@ -1,13 +1,13 @@
+import CustomOrderEditorForm from '@/components/layouts/CustomOrderEditorForm';
+import { useState } from 'react';
+
 function Checkout() {
+    const [data, setData] = useState({address: {}});
     return (
         <div>
-            <p>Tieu de trang: Checkout</p>
+            <CustomOrderEditorForm isCreate data={data} />
         </div>
     );
 }
 
 export default Checkout;
-
-
-
-

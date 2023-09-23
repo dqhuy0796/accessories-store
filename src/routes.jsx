@@ -16,6 +16,7 @@ import ProductDetails from '@/pages/ProductDetails';
 import Profile from '@/pages/Profile';
 import ProfileUpdate from '@/pages/ProfileUpdate';
 import Checkout from './pages/Checkout';
+import Collection from './pages/Collection';
 
 export const routes = {
     home: '/',
@@ -29,7 +30,7 @@ export const routes = {
     register: '/register',
     login: '/login',
     cart: '/cart',
-    productDetail: '/productDetail/:slug',
+    productDetail: '/product/:slug',
     // private (only valid when logged in)
     profile: '/profile',
     profileUpdate: '/profile/update',
@@ -44,41 +45,55 @@ export const routes = {
 export const publicRoutes = [
     {
         Layout: MainLayout,
+        title: "Trang chủ",
         Component: Home,
         path: routes.home,
     },
     {
         Layout: MainLayout,
+        title: "Bộ sưu tập",
+        Component: Collection,
+        path: routes.category,
+    },
+    {
+        Layout: MainLayout,
+        title: "Giới thiệu",
         Component: About,
         path: routes.about,
     },
     {
         Layout: MainLayout,
+        title: "Bài viết",
         Component: Blogs,
         path: routes.blogs,
     },
     {
         Layout: MainLayout,
+        title: "Liên hệ",
         Component: Contact,
         path: routes.contact,
     },
     {
         Layout: MainLayout,
+        title: "Giỏ hàng",
         Component: Cart,
         path: routes.cart,
     },
     {
         Layout: MainLayout,
+        title: "Thanh toán",
         Component: Checkout,
         path: routes.checkout,
     },
     {
         Layout: MainLayout,
+        title: "Dịch vụ",
         Component: Reservation,
         path: routes.reservation,
     },
     {
         Layout: MainLayout,
+        title: "Chi tiết",
         Component: ProductDetails,
         path: routes.productDetail,
     },
@@ -101,11 +116,13 @@ export const publicRoutes = [
 export const privateRoutes = [
     {
         Layout: MainLayout,
+        title: "",
         Component: Profile,
         path: routes.profile,
     },
     {
         Layout: MainLayout,
+        title: "",
         Component: ProfileUpdate,
         path: routes.profileUpdate,
     },
