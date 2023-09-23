@@ -4,8 +4,9 @@ import { Button, Drawer, IconButton, Spinner, Typography } from '@material-tailw
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import CustomCartProductCard from '../cards/CustomCartProductCard';
 
-function CartModal() {
+function CustomCartModal() {
     const [isLoading, setLoading] = useState(false);
     const { isOpen, quantity, subtotal, items } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
@@ -21,44 +22,39 @@ function CartModal() {
     };
 
     return (
-        <Drawer
-            placement="right"
-            open={isOpen}
-            onClose={handleCloseCartModal}
-            className="w-[500px] p-4"
-        >
-            <div className="mb-6 flex items-center justify-between">
+        <Drawer placement="right" open={isOpen} onClose={handleCloseCartModal} size={480} className="flex flex-col p-4">
+            <div className="-mr-3 flex shrink-0 items-center justify-between">
                 <Typography variant="h5" color="blue-gray">
                     {`Giỏ hàng (${quantity > 9 ? '9+' : quantity})`}
                 </Typography>
-                <IconButton variant="text" color="blue-gray" onClick={handleCloseCartModal}>
-                    <XMarkIcon className="h-5 w-5" />
+                <IconButton variant="text" onClick={handleCloseCartModal}>
+                    <XMarkIcon className="h-5 w-5" strokeWidth={2} />
                 </IconButton>
             </div>
-            <ul className="">
+            <ul className=" flex flex-1 flex-col gap-2 overflow-y-auto py-2">
                 {items.length > 0 &&
                     items.map((item, index) => (
                         <li key={index}>
                             <div className="flex">
-                                <Typography>{item.name ?? ''}</Typography>
-                                <Typography>{item.price ?? ''}</Typography>
-                                <Typography>{item.quantity ?? ''}</Typography>
+                                <CustomCartProductCard data={item} />
                             </div>
                         </li>
                     ))}
             </ul>
-            <Button
-                color="red"
-                variant="gradient"
-                className="flex items-center justify-center gap-2"
-                onClick={handleRedirectToCheckOut}
-                fullWidth
-            >
-                {isLoading ? <Spinner className="h-5 w-5" /> : null}
-                <span>Thanh toán</span>
-            </Button>
+            <div className="mt-auto shrink-0">
+                <Button
+                    color="red"
+                    variant="gradient"
+                    className="flex items-center justify-center gap-2"
+                    onClick={handleRedirectToCheckOut}
+                    fullWidth
+                >
+                    {isLoading ? <Spinner className="h-5 w-5" /> : null}
+                    <span>Thanh toán</span>
+                </Button>
+            </div>
         </Drawer>
     );
 }
 
-export default CartModal;
+export default CustomCartModal;

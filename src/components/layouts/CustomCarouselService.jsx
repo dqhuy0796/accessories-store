@@ -2,8 +2,10 @@ import { ChartBarIcon, CheckBadgeIcon, GifIcon, TruckIcon } from '@heroicons/rea
 import { Typography } from '@material-tailwind/react';
 import Slider from 'react-slick';
 
-function CustomCarouseService() {
+function CustomCarouselService() {
     const settings = {
+        prevArrow: <></>,
+        nextArrow: <></>,
         lazyload: true,
         infinite: false,
         speed: 500,
@@ -56,14 +58,18 @@ function CustomCarouseService() {
     ];
 
     return (
-        <div className="py-4">
+        <div className="bg-brown-50 py-6">
             <Slider {...settings} className="mx-6">
                 {shopData.map((item, index) => (
                     <div key={index}>
                         <div className="grid place-items-center gap-4">
                             <Typography className="">{item.icon}</Typography>
-                            <Typography className="text-xs font-bold">{item.title}</Typography>
-                            <Typography className="text-xs">{item.text}</Typography>
+                            <div>
+                                <Typography className="text-center text-sm font-bold uppercase">
+                                    {item.title}
+                                </Typography>
+                                <Typography className="text-center text-sm">{item.text}</Typography>
+                            </div>
                         </div>
                     </div>
                 ))}
@@ -72,4 +78,4 @@ function CustomCarouseService() {
     );
 }
 
-export default CustomCarouseService;
+export default CustomCarouselService;

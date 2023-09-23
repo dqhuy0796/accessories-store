@@ -17,6 +17,8 @@ import Profile from '@/pages/Profile';
 import ProfileUpdate from '@/pages/ProfileUpdate';
 import Checkout from './pages/Checkout';
 import Collection from './pages/Collection';
+import Orders from './pages/Orders';
+import OrderDetails from './pages/OrderDetails';
 
 export const routes = {
     home: '/',
@@ -45,55 +47,67 @@ export const routes = {
 export const publicRoutes = [
     {
         Layout: MainLayout,
-        title: "Trang chủ",
+        title: 'Trang chủ',
         Component: Home,
         path: routes.home,
     },
     {
         Layout: MainLayout,
-        title: "Bộ sưu tập",
+        title: 'Bộ sưu tập',
         Component: Collection,
         path: routes.category,
     },
     {
         Layout: MainLayout,
-        title: "Giới thiệu",
+        title: 'Giới thiệu',
         Component: About,
         path: routes.about,
     },
     {
         Layout: MainLayout,
-        title: "Bài viết",
+        title: 'Bài viết',
         Component: Blogs,
         path: routes.blogs,
     },
     {
         Layout: MainLayout,
-        title: "Liên hệ",
+        title: 'Liên hệ',
         Component: Contact,
         path: routes.contact,
     },
     {
         Layout: MainLayout,
-        title: "Giỏ hàng",
+        title: 'Giỏ hàng',
         Component: Cart,
         path: routes.cart,
     },
     {
         Layout: MainLayout,
-        title: "Thanh toán",
+        title: 'Thanh toán',
         Component: Checkout,
         path: routes.checkout,
     },
     {
         Layout: MainLayout,
-        title: "Dịch vụ",
+        title: 'Quản lý đơn hàng',
+        Component: Orders,
+        path: routes.orders,
+    },
+    {
+        Layout: MainLayout,
+        title: 'Chi tiết đơn hàng',
+        Component: OrderDetails,
+        path: routes.orderDetails,
+    },
+    {
+        Layout: MainLayout,
+        title: 'Dịch vụ',
         Component: Reservation,
         path: routes.reservation,
     },
     {
         Layout: MainLayout,
-        title: "Chi tiết",
+        title: 'Chi tiết',
         Component: ProductDetails,
         path: routes.productDetail,
     },
@@ -116,13 +130,13 @@ export const publicRoutes = [
 export const privateRoutes = [
     {
         Layout: MainLayout,
-        title: "",
+        title: 'Tài khoản',
         Component: Profile,
         path: routes.profile,
     },
     {
         Layout: MainLayout,
-        title: "",
+        title: 'Cập nhật tài khoản',
         Component: ProfileUpdate,
         path: routes.profileUpdate,
     },

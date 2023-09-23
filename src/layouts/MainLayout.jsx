@@ -1,5 +1,5 @@
-import CartModal from '@/components/layouts/CartModal';
-import CustomCarouseService from '@/components/layouts/CustomCarouseService';
+import CustomCartModal from '@/components/layouts/CustomCartModal';
+import CustomCarouselService from '@/components/layouts/CustomCarouselService';
 import CustomFooter from '@/components/layouts/CustomFooter';
 import CustomHeader from '@/components/layouts/CustomHeader';
 import CustomPageTitleSection from '@/components/layouts/CustomPageTitleSection';
@@ -15,9 +15,9 @@ function MainLayout({ children }) {
             <CustomHeader />
             {pathname !== routes.home && <CustomPageTitleSection pathname={pathname} />}
             <div className="min-h-screen">{children}</div>
-            <CustomCarouseService />
+            <CustomCarouselService />
             <CustomFooter />
-            <CartModal />
+            <CustomCartModal />
         </div>
     );
 }

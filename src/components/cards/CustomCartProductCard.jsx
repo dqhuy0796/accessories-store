@@ -1,62 +1,30 @@
-import { StarIcon } from '@heroicons/react/24/solid';
-import { Typography } from '@material-tailwind/react';
+import { Chip, IconButton, Rating, Typography } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
+import { MinusIcon, PlusIcon, StarIcon } from '@heroicons/react/24/solid';
 import CustomCurrencyDisplay from '../shared/CustomCurrencyDisplay';
+import { TrashIcon } from '@heroicons/react/24/outline';
+import { Link } from 'react-router-dom';
+import { routes } from '@/routes';
 
-export function CustomCartProductCard({ data, onPreview, onUpdate, onDelete }) {
+export function CustomCartProductCard({ data }) {
     return data ? (
-        <div className="relative flex flex-wrap items-center gap-3 rounded-lg border border-blue-gray-100 p-3 shadow-lg md:flex-nowrap">
-            <div className="relative grid w-full grid-cols-4 gap-2 text-blue-gray-500 md:grid-cols-12 md:gap-3">
-                <div className="relative row-span-2 pt-[100%] md:col-span-1 md:row-span-1">
-                    <div className="absolute inset-0 overflow-hidden rounded">
-                        <img src={data.feature_image_url} alt={data.name} className="h-full w-full object-cover" />
-                    </div>
-                </div>
-
-                <div className="col-span-3 flex flex-col justify-center md:row-span-1">
-                    <Typography className="text-base font-medium line-clamp-1">{data.name}</Typography>
-                    <div className="flex">
-                        <StarIcon className="h-4 w-4 text-yellow-700" />
-                        <StarIcon className="h-4 w-4 text-yellow-700" />
-                        <StarIcon className="h-4 w-4 text-yellow-700" />
-                        <StarIcon className="h-4 w-4 text-yellow-700" />
-                        <StarIcon className="h-4 w-4 text-yellow-700" />
-                    </div>
-                </div>
-
-                <div className="col-span-3 flex flex-col justify-center md:col-span-2">
-                    <Typography className="mb-1 text-xs line-clamp-1">Giá</Typography>
-                    <CustomCurrencyDisplay className="text-sm font-medium text-red-500" value={data.price} />
-                </div>
-
-                <div className="flex flex-col justify-center md:col-span-2">
-                    <Typography className="mb-1 text-xs line-clamp-1">Phân loại</Typography>
-                    <Typography className="text-sm font-medium line-clamp-1">{data.category}</Typography>
-                </div>
-
-                <div className="flex flex-col justify-center text-center">
-                    <Typography className="mb-1 text-xs line-clamp-1">Tổng số</Typography>
-                    <Typography className="text-sm font-medium">{data.quantity}</Typography>
-                </div>
-
-                <div className="flex flex-col justify-center text-center">
-                    <Typography className="mb-1 text-xs line-clamp-1">Đã bán</Typography>
-                    <Typography className="text-sm font-medium">{data.sold}</Typography>
-                </div>
-
-                <div className="flex flex-col items-center justify-center md:col-span-2">
-                    <Typography className="mb-1 text-xs line-clamp-1">Trạng thái</Typography>
-                    <Typography className="flex h-5 items-center gap-2">
-                        <span className="relative h-2 w-2 rounded-full bg-green-500 shadow-all shadow-green-200 sm:-top-px"></span>
-                        <span className="hidden whitespace-nowrap text-[10px] font-medium uppercase sm:block">
-                            In Stock
-                        </span>
-                    </Typography>
+        <div className="relative grid w-full grid-cols-3 gap-2 overflow-hidden rounded-lg border border-blue-gray-100 pr-2">
+            <div className="relative row-span-2 pt-[100%]">
+                <div className="absolute inset-0 overflow-hidden">
+                    <img src={data.feature_image_url} alt={data.name} className="h-full w-full object-cover" />
                 </div>
             </div>
+
+            <Link className="col-span-2 self-center" to={routes.productDetail.replace(":slug", data.slug)}>
+                <Typography className="text-base font-medium line-clamp-1">{data.name}</Typography>
+            </Link>
+
+            <CustomCurrencyDisplay className="self-center text-sm font-medium text-red-500" value={data.price} />
+
+            <CustomQuantityEditor quantity={data.quantity} className="self-center" />
         </div>
     ) : (
-        <CustomProductCardSkeleton />
+        <CustomItemCardSkeleton />
     );
 }
 
@@ -71,7 +39,28 @@ CustomCartProductCard.propTypes = {
     onDelete: PropTypes.func,
 };
 
-const CustomProductCardSkeleton = () => {
+const CustomQuantityEditor = ({ quantity, className }) => {
+    return (
+        <div className={'flex h-max w-max shrink-0 gap-2 ' + className}>
+            <div className="grid  grid-cols-3 border border-blue-gray-100">
+                <IconButton variant="text" size="sm" className="rounded-none">
+                    <MinusIcon className="h-4 w-4" />
+                </IconButton>
+                <div className="grid place-items-center border-x border-x-blue-gray-100">{quantity}</div>
+                <IconButton variant="text" size="sm" className="rounded-none">
+                    <PlusIcon className="h-4 w-4" />
+                </IconButton>
+            </div>
+            <div className="border border-blue-gray-100">
+                <IconButton variant="text" size="sm" className="rounded-none ">
+                    <TrashIcon className="h-4 w-4" />
+                </IconButton>
+            </div>
+        </div>
+    );
+};
+
+const CustomItemCardSkeleton = () => {
     const className1 = 'mb-1 w-[calc(100%-20px)] animate-pulse rounded bg-blue-gray-200 text-[14px] text-transparent';
     const className2 = 'animate-pulse rounded bg-blue-gray-400 text-[10px] text-transparent';
     return (
