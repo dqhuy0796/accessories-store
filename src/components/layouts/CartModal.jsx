@@ -1,64 +1,64 @@
-import { Drawer, IconButton, Typography } from "@material-tailwind/react";
-import PropTypes from "prop-types";
+import { closeCartModal } from '@/redux/actions/cartActions';
+import { XMarkIcon } from '@heroicons/react/24/solid';
+import { Button, Drawer, IconButton, Spinner, Typography } from '@material-tailwind/react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
+function CartModal() {
+    const [isLoading, setLoading] = useState(false);
+    const { isOpen, quantity, subtotal, items } = useSelector((state) => state.cart);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-function CartModal({open, onClose}) {
+    const handleCloseCartModal = () => {
+        dispatch(closeCartModal());
+    };
 
- 
+    const handleRedirectToCheckOut = () => {
+        dispatch(closeCartModal());
+        navigate('/checkout');
+    };
 
     return (
-        <Drawer placement="right" open={open} onClose={onClose} className="p-4 w-[500px]">
+        <Drawer
+            placement="right"
+            open={isOpen}
+            onClose={handleCloseCartModal}
+            className="w-[500px] p-4"
+        >
             <div className="mb-6 flex items-center justify-between">
                 <Typography variant="h5" color="blue-gray">
-                    Giỏ hàng
+                    {`Giỏ hàng (${quantity > 9 ? '9+' : quantity})`}
                 </Typography>
-                <IconButton variant="text" color="blue-gray" onClick={onClose}>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                        className="h-5 w-5"
-                    >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                <IconButton variant="text" color="blue-gray" onClick={handleCloseCartModal}>
+                    <XMarkIcon className="h-5 w-5" />
                 </IconButton>
             </div>
-            <div>
-                <div className="grid grid-cols-3 gap-2">
-                    <div className="col-span-1">
-                        <img
-                            className="h-36 w-full rounded-lg object-cover object-center"
-                            src="https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
-                            alt="nature image"
-                        />
-                    </div>
-                    <div className="col-span-1">
-                        <p>name</p>
-                        <p>mau sac</p>
-                        <div>
-                            <div>
-                                <span>-</span>
-                                <span>9</span>
-                                <span>+</span>
+            <ul className="">
+                {items.length > 0 &&
+                    items.map((item, index) => (
+                        <li key={index}>
+                            <div className="flex">
+                                <Typography>{item.name ?? ''}</Typography>
+                                <Typography>{item.price ?? ''}</Typography>
+                                <Typography>{item.quantity ?? ''}</Typography>
                             </div>
-                            <p>Xóa</p>
-                        </div>
-                    </div>
-                    <div className="col-span-1">
-                        <p>120000d</p>
-                    </div>
-                </div>
-            </div>
+                        </li>
+                    ))}
+            </ul>
+            <Button
+                color="red"
+                variant="gradient"
+                className="flex items-center justify-center gap-2"
+                onClick={handleRedirectToCheckOut}
+                fullWidth
+            >
+                {isLoading ? <Spinner className="h-5 w-5" /> : null}
+                <span>Thanh toán</span>
+            </Button>
         </Drawer>
     );
 }
-
-CartModal.propTypes = {
-    open: PropTypes.bool,
-    onClose: PropTypes.func,
-   
-};
 
 export default CartModal;

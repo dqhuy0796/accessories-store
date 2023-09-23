@@ -1,23 +1,22 @@
 /** @type {import('tailwindcss').Config} */
-import withMT from "@material-tailwind/react/utils/withMT";
-export default withMT({
-    content: [
-        "./index.html",
-        "./src/**/*.{js,ts,jsx,tsx}",
-        // "path-to-your-node_modules/@material-tailwind/react/components/**/*.{js,ts,jsx,tsx}",
-        // "path-to-your-node_modules/@material-tailwind/react/theme/components/**/*.{js,ts,jsx,tsx}",
-    ],
+const withMT = require('@material-tailwind/react/utils/withMT');
+const defaultTheme = require('tailwindcss/defaultTheme');
+
+module.exports = withMT({
+    content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
     theme: {
         extend: {
-            colors: {
-                "regal-blue": "#243c5a",
-                "foreground-primary-color": "var(--foreground-primary-color)",
-                "foreground-secondary-color": "var(--foreground-secondary-color)",
-                "background-primary-color": "var(--background-primary-color)",
-                "shadow-color:": "var(--shadow-color)",
-                "border-color": "var(--border-color)",
+            fontFamily: {
+                sans: ['Montserrat', ...defaultTheme.fontFamily.sans],
+                script: ['Pinyon Script', 'cursive'],
+            },
+            boxShadow: {
+                all: '0 0 4px 2px #9999',
             },
         },
     },
-    plugins: [],
+    plugins: [
+        //
+        require('@tailwindcss/line-clamp'),
+    ],
 });

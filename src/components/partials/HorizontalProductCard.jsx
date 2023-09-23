@@ -1,17 +1,18 @@
 import { IconButton, Typography } from "@material-tailwind/react";
 import PropTypes from "prop-types";
 import Currency from "../partials/Currency";
-import {Minus, Plus} from '@heroicons/react/24/solid'
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
+
 
 export function HorizontalProductCard({ data }) {
     const QuantityEditor = ({min, max, value, onUpdate}) => (
         <div className="flex">
             <IconButton variant="text" size="md">
-                <Minus className='w-5 h-5'/>
+                <MinusIcon className='w-5 h-5'/>
             </IconButton>
             <div className="p-4">{value}</div>
             <IconButton variant="text" size="md">
-                <Plus className='w-5 h-5'/>
+                <PlusIcon className='w-5 h-5'/>
             </IconButton>
         </div>
     )
