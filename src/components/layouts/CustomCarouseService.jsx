@@ -1,6 +1,5 @@
 import { ChartBarIcon, CheckBadgeIcon, GifIcon, TruckIcon } from '@heroicons/react/24/outline';
-import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid';
-import { Carousel, IconButton, Typography } from '@material-tailwind/react';
+import { Typography } from '@material-tailwind/react';
 import Slider from 'react-slick';
 
 function CustomCarouseService() {
@@ -8,16 +7,10 @@ function CustomCarouseService() {
         lazyload: true,
         infinite: false,
         speed: 500,
-        slidesToShow: 6,
+        slidesToShow: 4,
         slidesToScroll: 1,
         initialSlide: 1,
         responsive: [
-            {
-                breakpoint: 1440,
-                settings: {
-                    slidesToShow: 5,
-                },
-            },
             {
                 breakpoint: 1280,
                 settings: {
@@ -31,7 +24,7 @@ function CustomCarouseService() {
                 },
             },
             {
-                breakpoint: 540,
+                breakpoint: 420,
                 settings: {
                     slidesToShow: 1,
                 },
@@ -67,10 +60,7 @@ function CustomCarouseService() {
             <Slider {...settings} className="mx-6">
                 {shopData.map((item, index) => (
                     <div key={index}>
-                        <div
-                            className="grid place-items-center gap-4"
-                            
-                        >
+                        <div className="grid place-items-center gap-4">
                             <Typography className="">{item.icon}</Typography>
                             <Typography className="text-xs font-bold">{item.title}</Typography>
                             <Typography className="text-xs">{item.text}</Typography>
