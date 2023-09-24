@@ -22,7 +22,7 @@ function Checkout() {
     const [paymentMethod, setPaymentMethod] = useState({});
     const [paymentDetails, setPaymentDetails] = useState({});
 
-    const { isLogged, data: currentUser } = useSelector((state) => state.user);
+    const { isLogged, data: currentUser } = useSelector((state) => state.auth);
     const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
     const navigate = useNavigate();

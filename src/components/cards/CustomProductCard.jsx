@@ -1,5 +1,5 @@
 import { PlusIcon } from '@heroicons/react/24/solid';
-import { Button, Typography } from '@material-tailwind/react';
+import { Button, Spinner, Typography } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
 import CustomCurrencyDisplay from '../shared/CustomCurrencyDisplay';
 import { useDispatch } from 'react-redux';
@@ -16,8 +16,8 @@ export function CustomProductCard({ data }) {
     };
 
     return data ? (
-        <div className="">
-            <div className="group relative w-full overflow-hidden pt-[calc(100%*4/3)]">
+        <div className="p-0.5 rounded hover:shadow-all hover:shadow-gray-300/50">
+            <div className="group z-0 relative w-full overflow-hidden pt-[calc(100%*4/3)]">
                 <div className="absolute inset-x-0 bottom-0 translate-y-full p-3 transition-all duration-300 ease-in-out group-hover:translate-y-0">
                     <Button
                         color="white"
@@ -38,10 +38,7 @@ export function CustomProductCard({ data }) {
                 <Link to={routes.productDetail.replace(':slug', data.slug)}>
                     <Typography className="font-semibold hover:text-blue-600 hover:underline">{data.name}</Typography>
                 </Link>
-                <CustomCurrencyDisplay
-                    className={'text-sm font-normal text-red-500'}
-                    value={data.price}
-                />
+                <CustomCurrencyDisplay className={'text-sm font-medium text-red-500'} value={data.price} />
             </div>
         </div>
     ) : (
@@ -61,14 +58,15 @@ CustomProductCard.propTypes = {
 };
 
 const CustomProductCardSkeleton = () => {
-    const className1 =
-        'w-[calc(100%-20px)] animate-pulse rounded bg-blue-gray-200 text-[14px] text-transparent';
-    const className2 =
-        'w-[calc(100%-20px)] animate-pulse rounded bg-blue-gray-400 text-[10px] text-transparent';
+    const className1 = 'w-[calc(100%-20px)] animate-pulse rounded bg-blue-gray-200 text-[14px] text-transparent';
+    const className2 = 'w-[calc(100%-20px)] animate-pulse rounded bg-blue-gray-400 text-[10px] text-transparent';
     return (
         <div className="">
             <div className="group relative w-full overflow-hidden pt-[calc(100%*4/3)]">
                 <div className="absolute inset-0 -z-10 animate-pulse overflow-hidden rounded bg-blue-gray-200"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <Spinner className="h-6 w-6 text-white" />
+                </div>
             </div>
             <div className="grid place-items-center gap-2 p-2">
                 <div className={className1}>1</div>

@@ -1,5 +1,5 @@
 import CustomAddressSelection from '@/components/partials/CustomAddressSelection';
-import { login } from '@/redux/actions/userAction';
+import { login } from '@/redux/actions/authAction';
 import { routes } from '@/routes';
 import { authService } from '@/services';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
@@ -7,7 +7,7 @@ import { Button, Card, CardBody, CardFooter, Checkbox, Input, Spinner, Typograph
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 function Register() {
     const [isLoading, setLoading] = useState(false);
@@ -16,6 +16,7 @@ function Register() {
     const [showPassword, setShowPassword] = useState(false);
     const [isEqualPassword, setEqualPassword] = useState(false);
     const [isAgreeCondition, setAgreeCondition] = useState(false);
+    const [address, setAddress] = useState({});
     const [userData, setUserData] = useState({
         email: '',
         phone_number: '',
@@ -25,8 +26,7 @@ function Register() {
         address: '',
     });
 
-    const [address, setAddress] = useState({});
-
+    const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -148,9 +148,8 @@ function Register() {
         <div className="grid min-h-screen md:grid-cols-2">
             <img
                 src="https://www.junie.vn/cdn/shop/files/NonSale_HP_Hero_5-16_5-23_Desktop.jpg?v=1684537968&width=3000"
-                className="absolute inset-0 -z-10 h-full object-cover object-left"
+                className="absolute inset-0 -z-10 h-full object-cover object-right"
             />
-            <div></div>
             <div className="grid h-full w-full place-items-center bg-white">
                 <Card className="shadow-none">
                     <form action="#" onSubmit={handleSubmit}>
@@ -227,7 +226,7 @@ function Register() {
                             </Button>
                             <div color="blue" className="flex items-center justify-center gap-2 ">
                                 <Typography className="text-sm">Đã có tài khoản?</Typography>
-                                <Link to={routes.login}>
+                                <Link to={{ pathname: routes.login, state: { from: location.pathname } }}>
                                     <Typography color="blue" className="text-sm font-medium">
                                         Đăng nhập
                                     </Typography>

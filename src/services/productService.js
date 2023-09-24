@@ -76,7 +76,7 @@ export const getProductBySlugService = async (slug) => {
 
 /** AUTHORIZATION */
 
-const accessToken = store.getState().user.accessToken;
+const accessToken = store.getState().auth.accessToken;
 
 export const createProductService = async (data) => {
     const path = 'product/create';

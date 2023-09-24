@@ -1,4 +1,4 @@
-import { login } from '@/redux/actions/userAction';
+import { login } from '@/redux/actions/authAction';
 import { routes } from '@/routes';
 import { authService } from '@/services';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
@@ -6,7 +6,7 @@ import { Button, Card, CardBody, CardFooter, Input, Spinner, Typography } from '
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 function Login() {
     const [isLoading, setLoading] = useState(false);
@@ -16,6 +16,7 @@ function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
     const dispatch = useDispatch();
 
     const handleToggleShowPassword = () => {
@@ -42,7 +43,8 @@ function Login() {
                             refreshToken,
                         }),
                     );
-                    navigate(-1);
+                    navigate(routes.home);
+                    // navigate(location.state?.from === routes.register ? routes.home : -1);
                 } else {
                     setMessage(resMessage);
                 }

@@ -48,7 +48,7 @@ export const logoutService = async (phone_number) => {
 
 export const refreshTokensService = async () => {
     const path = 'auth/user/refresh';
-    const refreshToken = store.getState().user.refreshToken;
+    const refreshToken = store.getState().auth.refreshToken;
     const payload = {
         'x-refresh-token': refreshToken,
     };
@@ -62,7 +62,7 @@ export const refreshTokensService = async () => {
 
 export const updateProfileService = async (data) => {
     const path = 'auth/user/profile-update';
-    const accessToken = store.getState().user.accessToken;
+    const accessToken = store.getState().auth.accessToken;
     const payload = data;
 
     try {

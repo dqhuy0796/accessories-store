@@ -3,17 +3,17 @@ import { combineReducers } from 'redux';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import cartReducer from './reducers/cartReducer';
-import userReducer from './reducers/userReducer';
+import authReducer from './reducers/authReducer';
 
 const persistConfig = {
     key: 'root',
     version: 1,
     storage,
-    whitelist: ['user', 'cart'],
+    whitelist: ['auth', 'cart'],
 };
  
 const rootReducer = combineReducers({
-    user: userReducer,
+    auth: authReducer,
     cart: cartReducer
 });
 

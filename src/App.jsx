@@ -1,14 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { privateRoutes, publicRoutes } from './routes';
-import { logout, refreshTokens } from './redux/actions/userAction';
+import { logout, refreshTokens } from './redux/actions/authAction';
 import { useEffect } from 'react';
 import NotFound from './pages/NotFound';
 
 function App() {
     const dispatch = useDispatch();
-    const isLogged = useSelector((state) => state.user.isLogged);
-    const refreshToken = useSelector((state) => state.user.refreshToken);
+    const { isLogged, refreshToken } = useSelector((state) => state.auth);
 
     useEffect(() => {
         const handleRefreshTokens = async () => {
@@ -47,9 +46,14 @@ function App() {
                         <Route
                             key={index}
                             path={route.path}
+                            // render={({ location }) => (
+                            //     <route.Layout>
+                            //         <route.Component location={location} />
+                            //     </route.Layout>
+                            // )}
                             element={
                                 <route.Layout>
-                                    <route.Component />
+                                    <route.Component location={location} />
                                 </route.Layout>
                             }
                         />

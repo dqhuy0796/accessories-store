@@ -1,4 +1,4 @@
-import { mapTokens } from '@/redux/actions/userAction';
+import { mapTokens } from '@/redux/actions/authAction';
 import store from '@/redux/store';
 import axios from 'axios';
 
@@ -14,7 +14,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
     (config) => {
-        const accessToken = store.getState().user.accessToken;
+        const accessToken = store.getState().auth.accessToken;
         if (accessToken) {
             config.headers['Authorization'] = `Bearer ${accessToken}`;
         }
@@ -41,7 +41,7 @@ instance.interceptors.response.use(
 
                 try {
                     const res = await instance.post('/auth/user/refresh', {
-                        'x-refresh-token': store.getState().user.refreshToken,
+                        'x-refresh-token': store.getState().auth.refreshToken,
                     });
                     const { accessToken, refreshToken } = res.data;
                     store.dispatch(mapTokens(accessToken, refreshToken));

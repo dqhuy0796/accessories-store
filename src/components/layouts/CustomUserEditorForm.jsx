@@ -79,70 +79,65 @@ export function CustomUserEditorForm({ data, isCreate, onChange }) {
     ];
 
     return (
-        <div className="grid w-full gap-6 lg:grid-cols-3">
-            <div className="row-span-2 grid place-items-center">
+        <div className="grid w-full gap-6 md:grid-cols-2">
+            <div className="grid place-items-center">
                 <CustomAvatarUpload
                     avatar={data?.avatar}
                     readOnly={false}
                     onChangeAvatar={(value) => onChange('avatar', value)}
                 />
             </div>
-            {contents.map(({ layout, items }, index) =>
-                layout === 'header' ? (
-                    <div key={index} className="grid gap-6 lg:col-span-2">
-                        {items.map((item) => (
-                            <Input
-                                key={item.key}
-                                size="lg"
-                                color="blue"
-                                type={item.type}
-                                label={item.label}
-                                value={data[item.key] ?? ''}
-                                onChange={(e) => onChange(item.key, e.target.value)}
-                                readOnly={item.readOnly && !isCreate ? true : false}
-                            />
-                        ))}
-                    </div>
-                ) : (
-                    <div key={index} className="grid gap-6 lg:col-span-2">
-                        {items.map((item) => (
-                            <div key={item.key} className="flex items-end justify-between gap-2">
-                                {item.readOnly && !isCreate ? (
-                                    <>
-                                        <CustomUserDetailsItem
-                                            label={item.label}
-                                            text={data[item.key] ? data[item.key] : 'unknown'}
-                                            encrypt={item.key}
-                                        />
-                                        <Button
-                                            size="sm"
-                                            color="blue"
-                                            variant="text"
-                                            className="whitespace-nowrap px-2"
-                                        >
-                                            Chỉnh sửa
-                                        </Button>
-                                    </>
-                                ) : (
-                                    <Input
-                                        key={item.key}
-                                        size="lg"
-                                        color="blue"
-                                        type={item.type}
-                                        label={item.label}
-                                        value={data[item.key] ?? ''}
-                                        onChange={(e) => onChange(item.key, e.target.value)}
-                                        readOnly={item.readOnly && !isCreate ? true : false}
-                                    />
-                                )}
-                            </div>
-                        ))}
-                    </div>
-                ),
-            )}
-            <div className="grid gap-6 lg:col-span-3">
+            <div className="grid gap-4">
+                {contents.map(({ layout, items }, index) =>
+                    layout === 'header'
+                        ? items.map((item) => (
+                              <Input
+                                  key={item.key}
+                                  size="lg"
+                                  color="blue"
+                                  type={item.type}
+                                  label={item.label}
+                                  value={data[item.key] ?? ''}
+                                  onChange={(e) => onChange(item.key, e.target.value)}
+                                  readOnly={item.readOnly && !isCreate ? true : false}
+                              />
+                          ))
+                        : items.map((item) => (
+                              <div key={item.key} className="flex items-end justify-between pl-1 gap-2">
+                                  {item.readOnly && !isCreate ? (
+                                      <>
+                                          <CustomUserDetailsItem
+                                              label={item.label}
+                                              text={data[item.key] ? data[item.key] : 'unknown'}
+                                              encrypt={item.key}
+                                          />
+                                          <Button
+                                              size="sm"
+                                              color="blue"
+                                              variant="text"
+                                              className="whitespace-nowrap px-2"
+                                          >
+                                              Chỉnh sửa
+                                          </Button>
+                                      </>
+                                  ) : (
+                                      <Input
+                                          key={item.key}
+                                          size="lg"
+                                          color="blue"
+                                          type={item.type}
+                                          label={item.label}
+                                          value={data[item.key] ?? ''}
+                                          onChange={(e) => onChange(item.key, e.target.value)}
+                                          readOnly={item.readOnly && !isCreate ? true : false}
+                                      />
+                                  )}
+                              </div>
+                          )),
+                )}
                 <CustomAddressSelection address={data?.address} onChange={handleOnChangeAddress} />
-
+            </div>
+            <div className="grid gap-6 md:col-span-2">
                 <CustomEditor value={data?.bio} onChange={(value) => onChange('bio', value)} />
             </div>
         </div>

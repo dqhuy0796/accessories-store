@@ -1,4 +1,4 @@
-import { UserActionTypes } from '../constants';
+import { AuthActionTypes } from '../constants';
 
 const initState = {
     isLogged: false,
@@ -7,16 +7,16 @@ const initState = {
     refreshToken: null,
 };
 
-const userReducer = (state = initState, action) => {
+const authReducer = (state = initState, action) => {
     switch (action.type) {
-        case UserActionTypes.login:
+        case AuthActionTypes.login:
             return {
                 ...state,
                 isLogged: true,
                 ...action.payload,
             };
 
-        case UserActionTypes.logout:
+        case AuthActionTypes.logout:
             return {
                 isLogged: false,
                 data: {},
@@ -24,13 +24,13 @@ const userReducer = (state = initState, action) => {
                 refreshToken: null,
             };
 
-        case UserActionTypes.refresh:
+        case AuthActionTypes.refresh:
             return {
                 ...state,
                 ...action.payload,
             };
 
-        case UserActionTypes.ProfileUpdate:
+        case AuthActionTypes.ProfileUpdate:
             return {
                 ...state,
                 data: action.payload,
@@ -41,4 +41,4 @@ const userReducer = (state = initState, action) => {
     }
 };
 
-export default userReducer;
+export default authReducer;

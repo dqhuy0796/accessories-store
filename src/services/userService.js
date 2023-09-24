@@ -5,7 +5,7 @@ import store from '../redux/store';
 
 export const getRolesService = async (role_id) => {
     const path = 'role/get';
-    const accessToken = store.getState().user.accessToken;
+    const accessToken = store.getState().auth.accessToken;
     const payload = {
         role_id,
     };
@@ -35,7 +35,7 @@ export const getUsersCountService = async (role_id) => {
 
 export const getUsersService = async (role_id, slug, page) => {
     const path = 'user/get';
-    const accessToken = store.getState().user.accessToken;
+    const accessToken = store.getState().auth.accessToken;
     const payload = {
         role_id,
         slug,
@@ -52,7 +52,7 @@ export const getUsersService = async (role_id, slug, page) => {
 
 export const getUserByUsernameService = async (username) => {
     const path = 'user/get';
-    const accessToken = store.getState().user.accessToken;
+    const accessToken = store.getState().auth.accessToken;
     const payload = {
         username,
     };
@@ -67,7 +67,7 @@ export const getUserByUsernameService = async (username) => {
 
 export const createUserService = async (data) => {
     const path = 'user/create';
-    const accessToken = store.getState().user.accessToken;
+    const accessToken = store.getState().auth.accessToken;
     const payload = data;
 
     try {
@@ -80,7 +80,7 @@ export const createUserService = async (data) => {
 
 export const updateUserService = async (data) => {
     const path = 'user/update';
-    const accessToken = store.getState().user.accessToken;
+    const accessToken = store.getState().auth.accessToken;
     const payload = data;
 
     try {
@@ -93,7 +93,7 @@ export const updateUserService = async (data) => {
 
 export const deleteUserService = async (data) => {
     const path = 'user/delete';
-    const accessToken = store.getState().user.accessToken;
+    const accessToken = store.getState().auth.accessToken;
     const payload = data;
 
     try {

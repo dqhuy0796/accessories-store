@@ -18,7 +18,7 @@ function CustomShippingAddressCard({ onChangeAddress }) {
     const [openAccordion, setOpenAccordion] = useState(1);
     const [shippingAddress, setShippingAddress] = useState({});
     const [receiverAddress, setReceiverAddress] = useState({});
-    const { isLogged, data: currentUser } = useSelector((state) => state.user);
+    const { isLogged, data: currentUser } = useSelector((state) => state.auth);
 
     useEffect(() => {
         if (openAccordion === 1) {

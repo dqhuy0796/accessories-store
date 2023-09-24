@@ -1,35 +1,10 @@
-import { authService } from '@/services';
 import { UserActionTypes } from '../constants';
 
-export const login = (data) => ({
-    type: UserActionTypes.login,
-    payload: {
-        data: data.user,
-        accessToken: data.accessToken,
-        refreshToken: data.refreshToken,
-    },
+export const userPlaceNewOrder = (order_uuid) => ({
+    type: UserActionTypes.placeNewOrder,
+    payload: { order_uuid },
 });
 
-export const logout = () => ({
-    type: UserActionTypes.logout,
-});
-
-export const mapTokens = (accessToken, refreshToken) => ({
-    type: UserActionTypes.refresh,
-    payload: {
-        accessToken,
-        refreshToken,
-    },
-});
-
-export const refreshTokens = () => async (dispatch) => {
-    const response = await authService.refreshTokensService();
-    dispatch(mapTokens(response.accessToken, response.refreshToken));
-};
-
-// PROFILE
-
-export const updateProfile = (newProfile) => ({
-    type: UserActionTypes.ProfileUpdate,
-    payload: newProfile,
+export const userRemoveAllOrders = () => ({
+    type: UserActionTypes.removeAllOrders,
 });

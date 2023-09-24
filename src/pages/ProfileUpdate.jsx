@@ -1,7 +1,7 @@
 import CustomUserEditorForm from '@/components/layouts/CustomUserEditorForm';
 import CustomConfirmDialog from '@/components/layouts/CustomConfirmDialog';
 import CustomCrudGroupButtons from '@/components/partials/CustomCrudGroupButtons';
-import { updateProfile } from '@/redux/actions/userAction';
+import { updateProfile } from '@/redux/actions/authAction';
 import { authService } from '@/services';
 import { Card, CardBody, CardFooter } from '@material-tailwind/react';
 import _ from 'lodash';
@@ -14,23 +14,23 @@ export function ProfileUpdate() {
     const [defaultProfile, setDefaultProfile] = useState({});
     const [updatable, setUpdatable] = useState(false);
     const [dialog, setDialog] = useState({});
-    const user = useSelector((state) => state.user.data);
+    const currentUser = useSelector((state) => state.auth.data);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (user) {
-            const birth = handleFormatDate(user?.birth);
-            const address = handleConvertAddressToObject(user?.address);
+        if (currentUser) {
+            const birth = handleFormatDate(currentUser?.birth);
+            const address = handleConvertAddressToObject(currentUser?.address);
 
             setProfile({
-                ...user,
+                ...currentUser,
                 birth,
                 address,
             });
 
             setDefaultProfile({
-                ...user,
+                ...currentUser,
                 birth,
                 address,
             });
@@ -40,7 +40,7 @@ export function ProfileUpdate() {
             setProfile({});
             setDefaultProfile({});
         };
-    }, [user]);
+    }, [currentUser]);
 
     useEffect(() => {
         if (_.isEqual(defaultProfile, profile)) {
@@ -177,17 +177,12 @@ export function ProfileUpdate() {
     };
 
     return (
-        <>
-            <div className="relative -mx-4 mt-8 h-72 overflow-hidden bg-[url(https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80)] bg-cover	bg-center">
-                <div className="absolute inset-0 h-full w-full bg-blue-500/50" />
-            </div>
-            <Card className="-mt-16 mb-6 border-b border-blue-gray-100">
-                <CardBody className="p-4">
-                    {!_.isEmpty(profile) && (
-                        <CustomUserEditorForm data={profile} onChange={handleOnChangeInput} />
-                    )}
-                </CardBody>
-                <CardFooter>
+        <div className="py-4">
+            <div className="mx-auto max-w-[1440px]">
+                <div className="p-4">
+                    {!_.isEmpty(profile) && <CustomUserEditorForm data={profile} onChange={handleOnChangeInput} />}
+                </div>
+                <div className='p-4'>
                     <CustomCrudGroupButtons
                         btnConfirn={{
                             text: 'Lưu lại',
@@ -199,10 +194,10 @@ export function ProfileUpdate() {
                             onClick: handleCancel,
                         }}
                     />
-                </CardFooter>
-            </Card>
+                </div>
+            </div>
             <CustomConfirmDialog {...dialog} />
-        </>
+        </div>
     );
 }
 

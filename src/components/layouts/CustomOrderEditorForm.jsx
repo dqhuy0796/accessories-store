@@ -12,7 +12,7 @@ import CustomCurrencyDisplay from '../shared/CustomCurrencyDisplay';
 export function CustomOrderEditorForm({ data, isCreate, onChange }) {
     const [isLoading, setLoading] = useState(false);
     const [roles, setRoles] = useState([]);
-    const { role_id } = useSelector((state) => state.user.data);
+    const { role_id } = useSelector((state) => state.auth.data);
 
     useEffect(() => {
         const handleGetRoles = async () => {

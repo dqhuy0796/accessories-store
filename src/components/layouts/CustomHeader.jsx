@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 import { cartItemRemoveAll, openCartModal } from '@/redux/actions/cartActions';
-import { logout } from '@/redux/actions/userAction';
+import { logout } from '@/redux/actions/authAction';
 import { routes } from '@/routes';
 import { Bars3Icon, PlusSmallIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
 import { XMarkIcon } from '@heroicons/react/24/solid';
@@ -24,7 +24,7 @@ import CustomBagdeNotification from '../shared/CutomBagdeNotification';
 function CustomHeader() {
     const [scrolled, setScrolled] = useState(false);
     const [isOpenNavbar, setOpenNavbar] = useState(false);
-    const { isLogged, data: currentUser } = useSelector((state) => state.user);
+    const { isLogged, data: currentUser } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const cartQuantity = useSelector((state) => state.cart.quantity);
     const navigate = useNavigate();

@@ -1,17 +1,22 @@
+export const AuthActionTypes = Object.freeze({
+    login: 'AUTH_LOGIN',
+    logout: 'AUTH_LOGOUT',
+    refresh: 'AUTH_REFRESH',
+    ProfileUpdate: 'AUTH_UPDATE_PROFILE',
+});
+
 export const UserActionTypes = Object.freeze({
-    login: 'LOG_IN',
-    logout: 'LOG_OUT',
-    refresh: 'REFRESH',
-    ProfileUpdate: 'UPDATE_PROFILE',
-    toggleDarkmode: 'TOGGLE_DARKMODE',
+    placeNewOrder: 'USER_ADD_ORDER',
+    removeAllOrders: 'USER_REMOVE_ALL_ORDER',
+    toggleDarkmode: 'USER_TOGGLE_DARKMODE',
 });
 
 export const CartActionTypes = Object.freeze({
-    open: 'OPEN_CART',
-    close: 'CLOSE_CART',
-    addItem: 'ADD_ITEM',
-    removeItem: 'REMOVE_ITEM',
-    increaseItem: 'INCREASE_ITEM',
-    descreaseItem: 'DESCREASE_ITEM',
-    removeAll: 'REMOVE_ALL_ITEMS',
+    open: 'CART_OPEN',
+    close: 'CART_CLOSE',
+    addItem: 'CART_ADD_ITEM',
+    removeItem: 'CART_REMOVE_ITEM',
+    increaseItem: 'CART_INCREASE_ITEM',
+    descreaseItem: 'CART_DESCREASE_ITEM',
+    removeAll: 'CART_REMOVE_ALL',
 });

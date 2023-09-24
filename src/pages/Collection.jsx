@@ -3,42 +3,80 @@ import CustomFilter from '@/components/shared/CustomFilter';
 import { productService } from '@/services';
 import { Typography } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { useParams } from 'react-router-dom';
 
 function Collection() {
     const [isLoading, setLoading] = useState(false);
     const [products, setProducts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalResults, setTotalResults] = useState(0);
+    const [filterMenu, setFilterMenu] = useState(null);
     const { slug } = useParams();
-
-    const defaultArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
     const handleGetProducts = async (categories, page) => {
         setLoading(true);
         const response = await productService.getProductsService(categories, page);
         if (response && response.code === 'SUCCESS') {
-            setProducts(response.result);
+            const { page, total_pages, total_results, result } = response;
+            setProducts((prevState) => [...prevState, ...result]); // =>> bug or feature
+            setCurrentPage(Number(page));
+            setTotalPages(Number(total_pages));
+            setTotalResults(Number(total_results));
         }
         setLoading(false);
     };
 
+    const handleGetProductsCount = async () => {
+        setLoading(true);
+        const response = await productService.getProductsCountService();
+        if (response && response.code === 'SUCCESS') {
+            setFilterMenu(response.result);
+        }
+        setLoading(false);
+    };
+
+    const handleInfiniteFetch = () => {
+        if (totalPages > currentPage) {
+            console.log('handleInfiniteFetchs');
+            handleGetProducts(slug, currentPage + 1);
+        }
+    };
+
     useEffect(() => {
-        handleGetProducts(slug);
+        handleGetProducts(slug, currentPage);
+        console.log('uef get products');
     }, [slug]);
+
+    useEffect(() => {
+        handleGetProductsCount();
+    }, []);
 
     return (
         <div className={'py-8'}>
-            <Typography className="text-center text-base font-medium uppercase">Sản phẩm</Typography>
-
-            <div className="mx-auto flex max-w-[1440px] flex-wrap gap-4 md:flex-nowrap">
-                <div className="w-full pl-4 md:w-max">
-                    <CustomFilter />
-                </div>
-                <div className="grid max-w-[1440px] flex-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-                    {products.length > 0
-                        ? products.map((item, index) => <CustomProductCard data={item} key={index} />)
-                        : defaultArray.map((item, index) => <CustomProductCard key={index} />)}
-                </div>
+            <div className="mx-auto flex w-full max-w-[1440px] flex-wrap gap-4 p-4 md:flex-nowrap">
+                <div className="w-full shrink-0 md:w-max">{filterMenu && <CustomFilter contents={filterMenu} />}</div>
+                <InfiniteScroll
+                    dataLength={products.length}
+                    next={handleInfiniteFetch}
+                    hasMore={true}
+                    loader={totalPages > currentPage ? <CustomProductCard /> : null}
+                    className="grid w-full grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+                >
+                    {products.map((item, index) => (
+                        <CustomProductCard key={index} data={item} />
+                    ))}
+                </InfiniteScroll>
             </div>
+            {totalPages === currentPage && (
+                <>
+                    <hr className="mx-auto mt-16 w-full max-w-xs border-t border-blue-gray-100" />
+                    <Typography className="mx-auto mb-16 mt-6 w-max text-center font-semibold">
+                        Bạn đã xem hết rồi
+                    </Typography>
+                </>
+            )}
         </div>
     );
 }
