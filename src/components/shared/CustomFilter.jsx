@@ -18,8 +18,6 @@ function CustomFilter({ contents }) {
 
     const Icon = ({ id, open }) => (open === id ? <MinusIcon className="h-5 w-5" /> : <PlusIcon className="h-5 w-5" />);
 
-    console.log(contents);
-
     return (
         <div className="grid gap-6">
             <h2 className="text-xl font-medium">Bộ lọc</h2>

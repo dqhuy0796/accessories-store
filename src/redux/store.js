@@ -2,8 +2,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import cartReducer from './reducers/cartReducer';
 import authReducer from './reducers/authReducer';
+import cartReducer from './reducers/cartReducer';
+import userReducer from './reducers/userReducer';
 
 const persistConfig = {
     key: 'root',
@@ -11,10 +12,11 @@ const persistConfig = {
     storage,
     whitelist: ['auth', 'cart'],
 };
- 
+
 const rootReducer = combineReducers({
     auth: authReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    user: userReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

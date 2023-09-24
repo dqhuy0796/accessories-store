@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 import { MapPinIcon, PhoneIcon, UserIcon } from '@heroicons/react/24/solid';
 
 function CustomShippingAddressCard({ onChangeAddress }) {
-    const [openAccordion, setOpenAccordion] = useState(1);
+    const [openAccordion, setOpenAccordion] = useState(2);
     const [shippingAddress, setShippingAddress] = useState({});
     const [receiverAddress, setReceiverAddress] = useState({});
     const { isLogged, data: currentUser } = useSelector((state) => state.auth);
@@ -31,8 +31,18 @@ function CustomShippingAddressCard({ onChangeAddress }) {
             onChangeAddress(shippingAddress);
         }
 
-        return () => onChangeAddress({})
+        return () => onChangeAddress({});
     }, [openAccordion]);
+
+    useEffect(() => {
+        if (isLogged) {
+            setOpenAccordion(1);
+        } else {
+            setOpenAccordion(2);
+        }
+
+        return () => setOpenAccordion(2);
+    }, [isLogged]);
 
     const handleOpen = (value) => setOpenAccordion(value);
 
@@ -70,8 +80,6 @@ function CustomShippingAddressCard({ onChangeAddress }) {
         const addressArray = Object.values(rest);
 
         handleOnChange('receiver_address', [...addressArray, location].reverse().join(' - '));
-
-        console.log(shippingAddress);
     };
 
     return (

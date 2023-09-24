@@ -64,12 +64,10 @@ function Checkout() {
 
     const handleChangeShippingAddress = (value) => {
         setShippingAddress(value);
-        console.log(shippingAddress);
     };
 
     const handleChangePaymentMethod = (value) => {
         setPaymentMethod(value);
-        console.log(paymentMethod);
     };
 
     const handleCheckout = async () => {
@@ -99,76 +97,69 @@ function Checkout() {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-brown-50">
-            {successOrderUuid ? (
-                <CustomCheckoutSuccessfullySection order_uuid={successOrderUuid} />
-            ) : (
-                <div className="mx-auto grid min-h-screen max-w-[1440px] gap-4 md:grid-cols-2">
-                    <div className="grid w-full gap-4 bg-white p-4">
-                        <div className="grid gap-4 p-0">
-                            <Typography as="h3" className="text-xl font-semibold">
-                                Liên hệ
-                            </Typography>
+            <div className="mx-auto grid min-h-screen max-w-[1440px] gap-4 md:grid-cols-2">
+                <div className="grid w-full gap-4 bg-white p-4">
+                    <div className="grid gap-4 p-0">
+                        <Typography className="text-xl font-semibold">Liên hệ</Typography>
 
-                            <Input
-                                size="lg"
-                                color="blue"
-                                label="Số diện thoại"
-                                value={customerPhoneNumber}
-                                readOnly={isLogged}
-                                onChange={(e) => setCustomerPhoneNumber(e.target.value)}
-                            />
+                        {!isLogged && (
+                            <div className="flex items-end justify-end gap-1 p-0 leading-3">
+                                <span className="text-xs">Bạn đã có tài khoản?</span>
+                                <Link to={routes.login} className="block p-0">
+                                    <span className="text-xs font-medium text-blue-500 underline">Đăng nhập</span>
+                                </Link>
+                            </div>
+                        )}
 
-                            {!isLogged && (
-                                <Typography className="flex items-end">
-                                    <span className="text-xs">Bạn đã có tài khoản?</span>
-                                    <Link className="text-xs font-medium text-blue-500 underline">Đăng nhập</Link>
-                                </Typography>
-                            )}
-                        </div>
-
-                        <CustomShippingAddressCard
-                            data={shippingAddress}
-                            onChangeAddress={handleChangeShippingAddress}
-                        />
-
-                        <Textarea
+                        <Input
+                            size="lg"
                             color="blue"
-                            resize={false}
-                            label="Lưu ý cho người bán hàng"
-                            value={orderNote}
-                            onChange={(e) => setOrderNote(e.target.value)}
+                            label="Số diện thoại"
+                            value={customerPhoneNumber}
+                            readOnly={isLogged}
+                            onChange={(e) => setCustomerPhoneNumber(e.target.value)}
                         />
-
-                        <CustomSelectPaymentMethodCard onChangePaymentMethod={handleChangePaymentMethod} />
                     </div>
 
-                    <div className="flex flex-col gap-4 p-4">
-                        <CustomPaymentDetailsCard data={paymentDetails} />
+                    <CustomShippingAddressCard data={shippingAddress} onChangeAddress={handleChangeShippingAddress} />
 
-                        <Button
-                            size="lg"
-                            variant="gradient"
-                            className="flex items-center justify-center gap-2"
-                            color="red"
-                            disabled={isLoading || !allowCheckout}
-                            onClick={handleCheckout}
-                            fullWidth
-                        >
-                            {isLoading && <Spinner className="h-5 w-5" />}
-                            Hoàn tất đơn hàng
-                        </Button>
+                    <Textarea
+                        color="blue"
+                        resize={false}
+                        label="Lưu ý cho người bán hàng"
+                        value={orderNote}
+                        onChange={(e) => setOrderNote(e.target.value)}
+                    />
 
-                        <Button
-                            size="lg"
-                            variant="outlined"
-                            onClick={() => navigate(routes.collections.replace(':slug', 'all'))}
-                            fullWidth
-                        >
-                            Tiếp tục mua sắm
-                        </Button>
-                    </div>
+                    <CustomSelectPaymentMethodCard onChangePaymentMethod={handleChangePaymentMethod} />
                 </div>
-            )}
+
+                <div className="flex flex-col gap-4 p-4">
+                    <CustomPaymentDetailsCard data={paymentDetails} />
+
+                    <Button
+                        size="lg"
+                        variant="gradient"
+                        className="flex items-center justify-center gap-2"
+                        color="red"
+                        disabled={isLoading || !allowCheckout}
+                        onClick={handleCheckout}
+                        fullWidth
+                    >
+                        {isLoading && <Spinner className="h-5 w-5" />}
+                        Hoàn tất đơn hàng
+                    </Button>
+
+                    <Button
+                        size="lg"
+                        variant="outlined"
+                        onClick={() => navigate(routes.collections.replace(':slug', 'all'))}
+                        fullWidth
+                    >
+                        Tiếp tục mua sắm
+                    </Button>
+                </div>
+            </div>
         </div>
     );
 }

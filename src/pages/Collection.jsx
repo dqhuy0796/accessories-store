@@ -39,14 +39,12 @@ function Collection() {
 
     const handleInfiniteFetch = () => {
         if (totalPages > currentPage) {
-            console.log('handleInfiniteFetchs');
             handleGetProducts(slug, currentPage + 1);
         }
     };
 
     useEffect(() => {
         handleGetProducts(slug, currentPage);
-        console.log('uef get products');
     }, [slug]);
 
     useEffect(() => {

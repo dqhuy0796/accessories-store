@@ -19,6 +19,7 @@ import Checkout from './pages/Checkout';
 import Collection from './pages/Collection';
 import Orders from './pages/Orders';
 import OrderDetails from './pages/OrderDetails';
+import CheckoutSuccessfully from './pages/CheckoutSuccessfully';
 
 export const routes = {
     home: '/',
@@ -42,6 +43,7 @@ export const routes = {
     orders: '/order/all',
     orderDetails: '/order/:order_uuid',
     checkout: '/checkout',
+    checkoutSuccess: '/checkout/success',
 };
 
 export const publicRoutes = [
@@ -86,6 +88,12 @@ export const publicRoutes = [
         title: 'Thanh toán',
         Component: Checkout,
         path: routes.checkout,
+    },
+    {
+        Layout: MainLayout,
+        title: 'Thanh toán thành công',
+        Component: CheckoutSuccessfully,
+        path: routes.checkoutSuccess,
     },
     {
         Layout: MainLayout,
