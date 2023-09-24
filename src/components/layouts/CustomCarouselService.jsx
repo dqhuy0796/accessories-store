@@ -58,7 +58,7 @@ function CustomCarouselService() {
     ];
 
     return (
-        <div className="bg-brown-50 py-6">
+        <div className="bg-brown-50 py-6 border-t border-white">
             <Slider {...settings} className="mx-6">
                 {shopData.map((item, index) => (
                     <div key={index}>

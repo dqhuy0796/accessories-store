@@ -27,7 +27,7 @@ const cartReducer = (state = initState, action) => {
                 return {
                     ...state,
                     quantity: state.quantity + 1,
-                    subtotal: state.subtotal + action.payload.newPrice,
+                    subtotal: state.subtotal + action.payload.price,
                     items: [...state.items, action.payload],
                 };
                 // else have item(s), let's check
@@ -49,7 +49,7 @@ const cartReducer = (state = initState, action) => {
                 return {
                     ...state,
                     quantity: state.quantity + 1,
-                    subtotal: state.subtotal + action.payload.newPrice,
+                    subtotal: state.subtotal + action.payload.price,
                 };
             }
 
@@ -59,7 +59,9 @@ const cartReducer = (state = initState, action) => {
                 if (item.id === action.payload.id) {
                     state.quantity = state.quantity - state.items[index].quantity;
                     state.subtotal =
-                        state.subtotal - state.items[index].quantity * state.items[index].newPrice;
+                        state.subtotal < state.items[index].quantity * state.items[index].price
+                            ? 0
+                            : state.subtotal - state.items[index].quantity * state.items[index].price;
                     state.items = state.items.filter((item) => item.id !== action.payload.id);
                 }
             });
@@ -73,7 +75,7 @@ const cartReducer = (state = initState, action) => {
                 if (item.id === action.payload.id) {
                     state.items[index].quantity = state.items[index].quantity + 1;
                     state.quantity = state.quantity + 1;
-                    state.subtotal += state.items[index].newPrice;
+                    state.subtotal += state.items[index].price;
                 }
             });
             return {
@@ -86,8 +88,9 @@ const cartReducer = (state = initState, action) => {
                 if (item.id === action.payload.id) {
                     if (state.items[index].quantity > 1) {
                         state.items[index].quantity = state.items[index].quantity - 1;
-                        state.quantity = state.quantity - 1;
-                        state.subtotal = state.subtotal - state.items[index].newPrice;
+                        state.quantity = state.quantity > 1 ? state.quantity - 1 : 0;
+                        state.subtotal =
+                            state.subtotal < state.items[index].price ? 0 : state.subtotal - state.items[index].price;
                     }
                 }
             });

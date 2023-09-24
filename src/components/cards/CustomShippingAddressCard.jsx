@@ -9,18 +9,32 @@ import {
     Textarea,
     Typography,
 } from '@material-tailwind/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CustomAddressSelection from '../partials/CustomAddressSelection';
 import { useSelector } from 'react-redux';
 import { MapPinIcon, PhoneIcon, UserIcon } from '@heroicons/react/24/solid';
 
-function CustomShoppingAddressCard({ data, onChangeAddress }) {
-    const [open, setOpen] = useState(2);
+function CustomShippingAddressCard({ onChangeAddress }) {
+    const [openAccordion, setOpenAccordion] = useState(1);
     const [shippingAddress, setShippingAddress] = useState({});
     const [receiverAddress, setReceiverAddress] = useState({});
     const { isLogged, data: currentUser } = useSelector((state) => state.user);
 
-    const handleOpen = (value) => setOpen(value);
+    useEffect(() => {
+        if (openAccordion === 1) {
+            onChangeAddress({
+                receiver_name: currentUser.name,
+                receiver_phone: currentUser.phone_number,
+                receiver_address: currentUser.address,
+            });
+        } else {
+            onChangeAddress(shippingAddress);
+        }
+
+        return () => onChangeAddress({})
+    }, [openAccordion]);
+
+    const handleOpen = (value) => setOpenAccordion(value);
 
     const handleSelectDefaultAddress = () => {
         onChangeAddress({
@@ -40,7 +54,7 @@ function CustomShoppingAddressCard({ data, onChangeAddress }) {
             [key]: value,
         }));
 
-        if (open === 2) {
+        if (openAccordion === 2) {
             onChangeAddress(shippingAddress);
         }
     };
@@ -71,8 +85,8 @@ function CustomShoppingAddressCard({ data, onChangeAddress }) {
             <div className="border-t border-blue-gray-100">
                 {isLogged ? (
                     <Accordion
-                        open={open === 1}
-                        icon={<Icon checked={open === 1} />}
+                        open={openAccordion === 1}
+                        icon={<Icon checked={openAccordion === 1} />}
                         className="select-none border border-blue-gray-100 border-t-transparent px-4"
                     >
                         <AccordionHeader
@@ -81,7 +95,7 @@ function CustomShoppingAddressCard({ data, onChangeAddress }) {
                                 handleOpen(1);
                             }}
                             className={`border-b-0 text-sm font-semibold transition-none ${
-                                open === 1 ? 'text-blue-500' : null
+                                openAccordion === 1 ? 'text-blue-500' : null
                             }`}
                         >
                             Sử dụng địa chỉ mặc định
@@ -104,8 +118,8 @@ function CustomShoppingAddressCard({ data, onChangeAddress }) {
                 ) : null}
 
                 <Accordion
-                    open={open === 2}
-                    icon={<Icon checked={open === 2} />}
+                    open={openAccordion === 2}
+                    icon={<Icon checked={openAccordion === 2} />}
                     className="select-none border border-blue-gray-100 border-t-transparent px-4"
                 >
                     <AccordionHeader
@@ -114,10 +128,10 @@ function CustomShoppingAddressCard({ data, onChangeAddress }) {
                             handleSelectNewAddress();
                         }}
                         className={`border-b-0 text-sm font-semibold transition-none ${
-                            open === 2 ? 'text-blue-500' : null
+                            openAccordion === 2 ? 'text-blue-500' : null
                         }`}
                     >
-                        Thêm địa chỉ nhận hàng
+                        Địa chỉ nhận hàng mới
                     </AccordionHeader>
                     <AccordionBody className="grid gap-4 pt-1 text-sm font-normal">
                         <Input
@@ -140,19 +154,11 @@ function CustomShoppingAddressCard({ data, onChangeAddress }) {
                     </AccordionBody>
                 </Accordion>
             </div>
-
-            <Textarea
-                color="blue"
-                resize={false}
-                label="Lưu ý cho người bán hàng"
-                value={data.note ?? ''}
-                onChange={(e) => handleOnChange('note', e.target.value)}
-            />
         </div>
     );
 }
 
-export default CustomShoppingAddressCard;
+export default CustomShippingAddressCard;
 
 function Icon({ checked }) {
     const CheckedMark = () => (

@@ -5,9 +5,9 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CustomCartProductCard from '../cards/CustomCartProductCard';
+import CustomCurrencyDisplay from '../shared/CustomCurrencyDisplay';
 
 function CustomCartModal() {
-    const [isLoading, setLoading] = useState(false);
     const { isOpen, quantity, subtotal, items } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -46,11 +46,12 @@ function CustomCartModal() {
                     color="red"
                     variant="gradient"
                     className="flex items-center justify-center gap-2"
+                    disabled={quantity <= 0}
                     onClick={handleRedirectToCheckOut}
                     fullWidth
                 >
-                    {isLoading ? <Spinner className="h-5 w-5" /> : null}
                     <span>Thanh toán</span>
+                    {quantity > 0 ? <CustomCurrencyDisplay className="text-inherit font-semibold" value={subtotal}/> : null}
                 </Button>
             </div>
         </Drawer>

@@ -2,15 +2,7 @@ import { login } from '@/redux/actions/userAction';
 import { routes } from '@/routes';
 import { authService } from '@/services';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
-import {
-    Button,
-    Card,
-    CardBody,
-    CardFooter,
-    Input,
-    Spinner,
-    Typography,
-} from '@material-tailwind/react';
+import { Button, Card, CardBody, CardFooter, Input, Spinner, Typography } from '@material-tailwind/react';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -86,7 +78,7 @@ function Login() {
                             </Typography>
 
                             {message && (
-                                <Typography className="animation-float text-sm font-medium text-red-700">
+                                <Typography className="animation-float text-center text-sm font-medium text-red-700">
                                     {message}
                                 </Typography>
                             )}
@@ -105,10 +97,7 @@ function Login() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 icon={
-                                    <div
-                                        className="cursor-pointer"
-                                        onClick={handleToggleShowPassword}
-                                    >
+                                    <div className="cursor-pointer" onClick={handleToggleShowPassword}>
                                         {showPassword ? (
                                             <EyeIcon className="h-5 w-5" />
                                         ) : (

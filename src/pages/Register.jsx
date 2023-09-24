@@ -11,12 +11,22 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function Register() {
     const [isLoading, setLoading] = useState(false);
-    const [isLoginable, setLoginable] = useState(false);
+    const [isSubmitable, setSubmitable] = useState(false);
     const [message, setMessage] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [userData, setUserData] = useState({});
+    const [isEqualPassword, setEqualPassword] = useState(false);
+    const [isAgreeCondition, setAgreeCondition] = useState(false);
+    const [userData, setUserData] = useState({
+        email: '',
+        phone_number: '',
+        password: '',
+        confirm_password: '',
+        name: '',
+        address: '',
+    });
+
+    const [address, setAddress] = useState({});
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -30,77 +40,76 @@ function Register() {
             [key]: value,
         }));
     };
+
     const handleOnChangeAddress = (key, value) => {
-        switch (key) {
-            case 'province':
-                handleOnChange('address', {
-                    ...data.address,
-                    province: value,
-                    district: '',
-                    ward: '',
-                });
-                break;
-            case 'district':
-                handleOnChange('address', {
-                    ...data.address,
-                    district: value,
-                    ward: '',
-                });
-                break;
-            case 'ward':
-                handleOnChange('address', {
-                    ...data.address,
-                    ward: value,
-                });
-                break;
-            default:
-                handleOnChange('address', {
-                    ...data.address,
-                    location: value,
-                });
-                break;
-        }
+        setAddress((prevState) => ({
+            ...prevState,
+            [key]: value,
+        }));
+
+        const { location, ...rest } = address;
+
+        const addressArray = Object.values(rest);
+
+        handleOnChange('address', [...addressArray, location].reverse().join(' - '));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setMessage(null);
-        handleRegister(username, password);
+        handleRegister(userData);
     };
 
-    const handleRegister = async (username, password) => {
-        // try {
-        //     setLoading(true);
-        //     const response = await authService.loginService(username, password);
-        //     if (response) {
-        //         const { code, message: resMessage, result, accessToken, refreshToken } = response;
-        //         if (code === 'SUCCESS') {
-        //             dispatch(
-        //                 login({
-        //                     user: result,
-        //                     accessToken,
-        //                     refreshToken,
-        //                 }),
-        //             );
-        //             navigate(-1);
-        //         } else {
-        //             setMessage(resMessage);
-        //         }
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-        // } finally {
-        //     setLoading(false);
-        // }
+    const handleRegister = async (data) => {
+        try {
+            setLoading(true);
+            const response = await authService.registerService(data);
+            if (response) {
+                const { code, message: resMessage, result, accessToken, refreshToken } = response;
+                if (code === 'SUCCESS') {
+                    dispatch(
+                        login({
+                            user: result,
+                            accessToken,
+                            refreshToken,
+                        }),
+                    );
+                    navigate(routes.home);
+                } else {
+                    setMessage(resMessage);
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
-        if (!_.isEmpty(username) && !_.isEmpty(password)) {
-            setLoginable(true);
+        const { email, phone_number, password, confirm_password, name, address } = userData;
+
+        if (
+            isAgreeCondition &&
+            !_.isEmpty(email) &&
+            !_.isEmpty(phone_number) &&
+            !_.isEmpty(password) &&
+            !_.isEmpty(confirm_password) &&
+            !_.isEmpty(name) &&
+            !_.isEmpty(address) &&
+            _.isEqual(password, confirm_password)
+        ) {
+            setSubmitable(true);
         } else {
-            setLoginable(false);
+            setSubmitable(false);
         }
-    }, [username, password]);
+
+        if (_.isEqual(password, confirm_password)) {
+            setMessage(null);
+        } else {
+            setMessage('Xác nhận mật khẩu không khớp, kiểm tra lại!');
+        }
+    }, [userData, isAgreeCondition]);
 
     const contents = [
         {
@@ -132,7 +141,6 @@ function Register() {
             key: 'name',
             label: 'Tên bạn là gì?',
             type: 'text',
-            require: true,
         },
     ];
 
@@ -153,7 +161,7 @@ function Register() {
                                 </Typography>
 
                                 {message && (
-                                    <Typography className="animation-float text-sm font-medium text-red-700">
+                                    <Typography className="animation-float text-center text-sm font-medium text-red-700">
                                         {message}
                                     </Typography>
                                 )}
@@ -163,10 +171,12 @@ function Register() {
                                         <Input
                                             key={item.key}
                                             size="lg"
+                                            color="blue"
                                             label={item.label}
                                             value={userData[item.key] ?? ''}
                                             type={showPassword ? 'text' : 'password'}
                                             onChange={(e) => handleOnChange(item.key, e.target.value)}
+                                            required
                                             icon={
                                                 <div className="cursor-pointer" onClick={handleToggleShowPassword}>
                                                     {showPassword ? (
@@ -181,25 +191,26 @@ function Register() {
                                         <Input
                                             key={item.key}
                                             size="lg"
+                                            color="blue"
                                             type={item.type}
                                             label={item.label}
                                             value={userData[item.key] ?? ''}
                                             onChange={(e) => handleOnChange(item.key, e.target.value)}
+                                            required={item.require}
                                         />
                                     ),
                                 )}
 
-                                <CustomAddressSelection
-                                    address={userData.address ?? {}}
-                                    onChange={handleOnChangeAddress}
-                                />
+                                <CustomAddressSelection address={address ?? {}} onChange={handleOnChangeAddress} />
 
                                 <Checkbox
+                                    checked={isAgreeCondition}
                                     label={
                                         <Typography className="text-sm font-medium">
                                             Đồng ý với đ.kiện và đ.khoản sử dụng
                                         </Typography>
                                     }
+                                    onChange={() => setAgreeCondition((prevState) => !prevState)}
                                 />
                             </div>
                         </CardBody>
@@ -208,7 +219,7 @@ function Register() {
                                 type="submit"
                                 variant="gradient"
                                 className="flex items-center justify-center gap-2"
-                                disabled={!isLoginable || isLoading}
+                                disabled={!isSubmitable || isLoading}
                                 fullWidth
                             >
                                 {isLoading && <Spinner className="h-5 w-5" />}

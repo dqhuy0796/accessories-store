@@ -1,28 +1,29 @@
+import { orderService } from '@/services';
 import { Accordion, AccordionBody, AccordionHeader, Radio, Typography } from '@material-tailwind/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-function CustomSelectPaymentMethodCard() {
-    const [open, setOpen] = useState(2);
+function CustomSelectPaymentMethodCard({ onChangePaymentMethod }) {
+    const [open, setOpen] = useState(1);
+    const [paymentMethods, setPaymentMethods] = useState(null);
 
     const handleOpen = (value) => setOpen(value);
 
-    const paymentMethods = [
-        {
-            id: 1,
-            title: 'Thanh toán VISA/MASTERCARD',
-            content: 'Chưa hỗ trợ thanh toán bằng VISA/MASTERCARD. Vui lòng chọn hình thức thanh toán khác.',
-        },
-        {
-            id: 2,
-            title: 'Thanh toán khi nhận hàng (COD)',
-            content: 'Được kiểm tra hàng trước khi thanh toán cho người giao hàng.',
-        },
-        {
-            id: 3,
-            title: 'Chuyển khoản ngân hàng',
-            content: 'Thông tin chuyển khoản sẽ được hiển thị khi bạn hoàn tất đặt hàng.',
-        },
-    ];
+    useEffect(() => {
+        const handleGetPaymentMethods = async () => {
+            const response = await orderService.getPaymentMethodsService();
+            if (response && response.code === 'SUCCESS') {
+                setPaymentMethods(response.result);
+            }
+        };
+        handleGetPaymentMethods();
+    }, []);
+
+    useEffect(() => {
+        if(paymentMethods){
+            const method = paymentMethods.find(item => item.id === open)
+            onChangePaymentMethod(method)
+        }
+    }, [open, paymentMethods]);
 
     return (
         <div className="grid gap-4 p-0">
@@ -33,36 +34,40 @@ function CustomSelectPaymentMethodCard() {
             <Typography className="text-xs">Toàn bộ các giao dịch được bảo mật và mã hóa</Typography>
 
             <div className="border-t border-blue-gray-100">
-                {paymentMethods.map((item) => (
-                    <Accordion
-                        key={item.id}
-                        open={open === item.id}
-                        icon={
-                            <div className="relative translate-x-3">
-                                <Radio
-                                    color="blue"
-                                    className="h-4 w-4"
-                                    readOnly
-                                    checked={open === item.id}
-                                    icon={<Icon />}
-                                />
-                            </div>
-                        }
-                        className={`select-none border border-blue-gray-100 border-t-transparent px-4 ${
-                            open === item.id ? 'bg-blue-50/50' : null
-                        }`}
-                    >
-                        <AccordionHeader
-                            onClick={() => handleOpen(item.id)}
-                            className={`border-b-0 text-sm font-semibold transition-none ${
-                                open === item.id ? 'text-blue-500' : null
+                {paymentMethods &&
+                    paymentMethods.map((item) => (
+                        <Accordion
+                            key={item.id}
+                            open={open === item.id}
+                            icon={
+                                <div className="relative translate-x-3">
+                                    <Radio
+                                        color="blue"
+                                        className="h-4 w-4"
+                                        readOnly
+                                        checked={open === item.id}
+                                        icon={<Icon />}
+                                    />
+                                </div>
+                            }
+                            className={`select-none border border-blue-gray-100 border-t-transparent px-4 ${
+                                open === item.id ? 'bg-blue-50/50' : null
                             }`}
                         >
-                            {item.title}
-                        </AccordionHeader>
-                        <AccordionBody className="pt-0 text-sm font-normal">{item.content}</AccordionBody>
-                    </Accordion>
-                ))}
+                            <AccordionHeader
+                                onClick={() => {
+                                    handleOpen(item.id);
+                                    // onChangePaymentMethod(item);
+                                }}
+                                className={`border-b-0 text-sm font-semibold transition-none ${
+                                    open === item.id ? 'text-blue-500' : null
+                                }`}
+                            >
+                                {item.name}
+                            </AccordionHeader>
+                            <AccordionBody className="pt-0 text-sm font-normal">{item.description}</AccordionBody>
+                        </Accordion>
+                    ))}
             </div>
         </div>
     );

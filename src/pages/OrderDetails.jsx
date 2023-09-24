@@ -1,9 +1,36 @@
 import CustomOrderProductCard from '@/components/cards/CustomOrderProductCard';
 import CustomTimeLine from '@/components/partials/CustomTimeLine';
 import CustomCurrencyDisplay from '@/components/shared/CustomCurrencyDisplay';
-import React from 'react';
+import { orderService } from '@/services';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 function OrderDetails() {
+    const [isLoading, setLoading] = useState(false);
+    const [orderData, setOrderData] = useState(null);
+    const { order_uuid } = useParams();
+
+    const handleGetOrderByUuid = async (order_uuid) => {
+        try {
+            setLoading(true);
+            const response = await orderService.getOrderByUuidService(order_uuid);
+            if (response) {
+                const { code, message, result } = response;
+                if (code === 'SUCCESS') {
+                    setOrderData(result);
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        handleGetOrderByUuid(order_uuid);
+    }, [order_uuid]);
+
     const items = [
         {
             name: 'vong tay',
@@ -69,14 +96,14 @@ function OrderDetails() {
                 <div className="flex flex-wrap gap-4">
                     <div className="w-full p-4 md:w-[calc(50%_-_8px)]">
                         <p className="mb-4 text-[1.6rem] font-semibold">Địa chỉ nhận hàng</p>
-                        { (
-                            <ul className='flex items-center justify-between text-sm font-normal text-justify'>
+                        {
+                            <ul className="flex items-center justify-between text-justify text-sm font-normal">
                                 <li>Joh Doe</li>
                                 <li>0945421789</li>
                                 <li>Tổ 4</li>
                                 <li>Tân thịnh - Thái Nguyên</li>
                             </ul>
-                        )}
+                        }
                     </div>
                     <div className="w-full p-4 md:w-[calc(50%_-_8px)]">
                         <p className="mb-4 text-[1.6rem] font-semibold">Chi tiết thanh toán</p>

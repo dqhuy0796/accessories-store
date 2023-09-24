@@ -1,12 +1,16 @@
-import { Chip, IconButton, Rating, Typography } from '@material-tailwind/react';
-import PropTypes from 'prop-types';
-import { MinusIcon, PlusIcon, StarIcon } from '@heroicons/react/24/solid';
-import CustomCurrencyDisplay from '../shared/CustomCurrencyDisplay';
-import { TrashIcon } from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
+import { cartItemDescrease, cartItemIncrease, cartItemRemove } from '@/redux/actions/cartActions';
 import { routes } from '@/routes';
+import { TrashIcon } from '@heroicons/react/24/outline';
+import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { IconButton, Typography } from '@material-tailwind/react';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import CustomCurrencyDisplay from '../shared/CustomCurrencyDisplay';
 
 export function CustomCartProductCard({ data }) {
+    const dispatch = useDispatch();
+
     return data ? (
         <div className="relative grid w-full grid-cols-3 gap-2 overflow-hidden rounded-lg border border-blue-gray-100 pr-2">
             <div className="relative row-span-2 pt-[100%]">
@@ -15,13 +19,19 @@ export function CustomCartProductCard({ data }) {
                 </div>
             </div>
 
-            <Link className="col-span-2 self-center" to={routes.productDetail.replace(":slug", data.slug)}>
+            <Link className="col-span-2 self-center" to={routes.productDetail.replace(':slug', data.slug)}>
                 <Typography className="text-base font-medium line-clamp-1">{data.name}</Typography>
             </Link>
 
             <CustomCurrencyDisplay className="self-center text-sm font-medium text-red-500" value={data.price} />
 
-            <CustomQuantityEditor quantity={data.quantity} className="self-center" />
+            <CustomQuantityEditor
+                quantity={data.quantity}
+                onIncrease={() => dispatch(cartItemIncrease(data))}
+                onDescrease={() => dispatch(cartItemDescrease(data))}
+                onRemove={() => dispatch(cartItemRemove(data))}
+                className="self-center"
+            />
         </div>
     ) : (
         <CustomItemCardSkeleton />
@@ -39,20 +49,20 @@ CustomCartProductCard.propTypes = {
     onDelete: PropTypes.func,
 };
 
-const CustomQuantityEditor = ({ quantity, className }) => {
+const CustomQuantityEditor = ({ quantity, className, onIncrease, onDescrease, onRemove }) => {
     return (
         <div className={'flex h-max w-max shrink-0 gap-2 ' + className}>
             <div className="grid  grid-cols-3 border border-blue-gray-100">
-                <IconButton variant="text" size="sm" className="rounded-none">
+                <IconButton variant="text" size="sm" className="rounded-none" onClick={onDescrease}>
                     <MinusIcon className="h-4 w-4" />
                 </IconButton>
                 <div className="grid place-items-center border-x border-x-blue-gray-100">{quantity}</div>
-                <IconButton variant="text" size="sm" className="rounded-none">
+                <IconButton variant="text" size="sm" className="rounded-none" onClick={onIncrease}>
                     <PlusIcon className="h-4 w-4" />
                 </IconButton>
             </div>
             <div className="border border-blue-gray-100">
-                <IconButton variant="text" size="sm" className="rounded-none ">
+                <IconButton variant="text" size="sm" className="rounded-none" onClick={onRemove}>
                     <TrashIcon className="h-4 w-4" />
                 </IconButton>
             </div>

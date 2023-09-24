@@ -16,6 +16,7 @@ import { routes } from '@/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartItemRemoveAll, openCartModal } from '@/redux/actions/cartActions';
 import { logout } from '@/redux/actions/userAction';
+import CustomBagdeNotification from '../shared/CutomBagdeNotification';
 function CustomHeader() {
     const [scrolled, setScrolled] = useState(false);
     const [isOpenNavbar, setOpenNavbar] = useState(false);
@@ -127,11 +128,11 @@ function CustomHeader() {
                             </Link>
                         )}
 
-                        <Badge withBorder content={cartQuantity > 9 ? '9+' : cartQuantity}>
+                        <CustomBagdeNotification notification={cartQuantity > 9 ? '9+' : cartQuantity}>
                             <IconButton variant="text" onClick={handleOpenCart}>
                                 <ShoppingBagIcon className="h-8 w-8" />
                             </IconButton>
-                        </Badge>
+                        </CustomBagdeNotification>
                     </div>
                     <div
                         className="hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto"
