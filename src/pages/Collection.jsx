@@ -29,11 +29,11 @@ function Collection() {
         <div className={'py-8'}>
             <Typography className="text-center text-base font-medium uppercase">Sản phẩm</Typography>
 
-            <div className='grid grid-cols-6 gap-6 mt-8 mx-auto'>
-                <div className='col-span-1 pl-4 hidden lg:block'>
+            <div className="mx-auto flex max-w-[1440px] flex-wrap gap-4 md:flex-nowrap">
+                <div className="w-full pl-4 md:w-max">
                     <CustomFilter />
                 </div>
-                <div className="col-span-full lg:col-span-5 grid max-w-[1440px] gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+                <div className="grid max-w-[1440px] flex-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
                     {products.length > 0
                         ? products.map((item, index) => <CustomProductCard data={item} key={index} />)
                         : defaultArray.map((item, index) => <CustomProductCard key={index} />)}

@@ -1,4 +1,13 @@
-import { Accordion, AccordionBody, AccordionHeader, Radio, Slider, Tooltip, Typography } from '@material-tailwind/react';
+import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
+import {
+    Accordion,
+    AccordionBody,
+    AccordionHeader,
+    Radio,
+    Slider,
+    Tooltip,
+    Typography,
+} from '@material-tailwind/react';
 import React from 'react';
 
 function CustomFilter() {
@@ -7,18 +16,7 @@ function CustomFilter() {
     const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
     function Icon({ id, open }) {
-        return (
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className={`${id === open ? 'rotate-180' : ''} h-5 w-5 transition-transform`}
-            >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-            </svg>
-        );
+        return open === id ? <MinusIcon className="h-5 w-5" /> : <PlusIcon className="h-5 w-5" />;
     }
 
     return (
@@ -45,7 +43,7 @@ function CustomFilter() {
                     <AccordionHeader className="text-base" onClick={() => handleOpen(2)}>
                         Loại sản phẩm
                     </AccordionHeader>
-                    <AccordionBody className='flex flex-col'>
+                    <AccordionBody className="flex flex-col">
                         <Radio name="type" label="Nhẫn" />
                         <Radio name="type" label="Lắc tay" defaultChecked />
                         <Radio name="type" label="Vòng cổ" />
@@ -56,17 +54,16 @@ function CustomFilter() {
                     <AccordionHeader className="text-base" onClick={() => handleOpen(3)}>
                         giá
                     </AccordionHeader>
-                    <AccordionBody className=''>
+                    <AccordionBody className="">
                         <Slider
                             defaultValue={50}
-                            className="text-[#2ec947]"
-                            barClassName="rounded-none bg-[#2ec946]"
+                            barClassName="rounded-none bg-[#ff999a]"
                             thumbClassName="[&::-moz-range-thumb]:rounded-none [&::-webkit-slider-thumb]:rounded-none [&::-moz-range-thumb]:-mt-[4px] [&::-webkit-slider-thumb]:-mt-[4px]"
-                            trackClassName="[&::-webkit-slider-runnable-track]:bg-transparent [&::-moz-range-track]:bg-transparent rounded-none !bg-[#2ec946]/10 border border-[#2ec946]/20"
+                            trackClassName="[&::-webkit-slider-runnable-track]:bg-transparent [&::-moz-range-track]:bg-transparent rounded-none !bg-[#ff999a]/10 border border-[#ff999a]/20"
                         />
                         <div className="mb-2 mt-4 flex items-center justify-between">
                             <Typography color="blue-gray" variant="h6">
-                                Giá: 
+                                Giá:
                             </Typography>
                             <Typography color="blue-gray" variant="h6">
                                 {123} đ

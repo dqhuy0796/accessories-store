@@ -102,52 +102,40 @@ function About() {
     ];
 
     return (
-        <div className="px-6">
-            <div className="mt-6">
-                <Tabs value={activeTab}>
-                    <TabsHeader
-                        className="rounded-none border-b border-blue-gray-50 bg-transparent p-0"
-                        indicatorProps={{
-                            className:
-                                'bg-transparent border-b-2 border-gray-900 shadow-none rounded-none',
-                        }}
-                    >
-                        {data.map(({ label, value }) => (
-                            <Tab
-                                className={activeTab === value ? 'text-gray-900' : ''}
-                                key={value}
-                                value={value}
-                                onClick={() => setActiveTab(value)}
-                            >
-                                <div className="flex items-center gap-2 text-xs font-bold uppercase md:text-base">
-                                    {label}
-                                </div>
-                            </Tab>
-                        ))}
-                    </TabsHeader>
-                    <TabsBody>
-                        {data.map(({ value, more }) => (
-                            <TabPanel key={value} value={value}>
-                                {more.map((item, index) => (
-                                    <Accordion
-                                        key={index}
-                                        open={open === index}
-                                        onClick={() => setOpen(index)}
-                                    >
-                                        <AccordionHeader className="text-sm md:text-sm ">
-                                            {item.title}
-                                        </AccordionHeader>
-                                        <AccordionBody className="text-xs">
-                                            {item.desc}
-                                        </AccordionBody>
-                                    </Accordion>
-                                ))}
-                            </TabPanel>
-                        ))}
-                    </TabsBody>
-                </Tabs>
-                ;
-            </div>
+        <div className="p-4">
+            <Tabs value={activeTab}>
+                <TabsHeader
+                    className="rounded-none border-b border-blue-gray-50 bg-transparent p-0"
+                    indicatorProps={{
+                        className: 'bg-transparent border-b-2 border-gray-900 shadow-none rounded-none',
+                    }}
+                >
+                    {data.map(({ label, value }) => (
+                        <Tab
+                            className={activeTab === value ? 'text-gray-900' : ''}
+                            key={value}
+                            value={value}
+                            onClick={() => setActiveTab(value)}
+                        >
+                            <div className="flex items-center gap-2 text-xs font-bold uppercase md:text-base">
+                                {label}
+                            </div>
+                        </Tab>
+                    ))}
+                </TabsHeader>
+                <TabsBody>
+                    {data.map(({ value, more }) => (
+                        <TabPanel key={value} value={value} className='px-0'>
+                            {more.map((item, index) => (
+                                <Accordion key={index} open={open === index} onClick={() => setOpen(index)}>
+                                    <AccordionHeader className="text-sm md:text-sm ">{item.title}</AccordionHeader>
+                                    <AccordionBody className="text-xs">{item.desc}</AccordionBody>
+                                </Accordion>
+                            ))}
+                        </TabPanel>
+                    ))}
+                </TabsBody>
+            </Tabs>
         </div>
     );
 }
