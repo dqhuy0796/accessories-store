@@ -19,11 +19,10 @@ export const getPaymentMethodsService = async () => {
 
 export const checkoutService = async (data) => {
     const path = 'order/checkout';
-    const accessToken = store.getState().user.accessToken;
     const payload = data;
 
     try {
-        const result = await authorizationRequest.postApi(path, payload, accessToken);
+        const result = await publicRequest.postApi(path, payload);
         return result;
     } catch (error) {
         console.log(error);
