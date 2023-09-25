@@ -17,7 +17,7 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { cartItemRemoveAll, openCartModal } from '@/redux/actions/cartActions';
 import { logout } from '@/redux/actions/authAction';
 import { routes } from '@/routes';
-import { Bars3Icon, PlusSmallIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, MinusSmallIcon, PlusSmallIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomBagdeNotification from '../shared/CutomBagdeNotification';
@@ -192,7 +192,7 @@ function CustomHeader() {
                                 </IconButton>
                             </div>
 
-                            <ul className="mt-4 flex-1 flex flex-col font-medium lg:mt-0 lg:flex-row">
+                            <ul className="mt-4 flex flex-1 flex-col font-medium lg:mt-0 lg:flex-row">
                                 {menu.map(({ title, path }) => (
                                     <li key={path} className="border-b border-b-blue-gray-100">
                                         <NavLink
@@ -212,39 +212,77 @@ function CustomHeader() {
                                 ))}
                                 <li className="mt-auto">
                                     {isLogged ? (
-                                        <Accordion open={openAccordion} icon={<PlusSmallIcon className="h-4 w-4" />}>
+                                        <Accordion
+                                            open={openAccordion}
+                                            icon={
+                                                <IconButton size="sm" variant="text">
+                                                    {openAccordion ? (
+                                                        <MinusSmallIcon className="h-5 w-5" />
+                                                    ) : (
+                                                        <PlusSmallIcon className="h-5 w-5" />
+                                                    )}
+                                                </IconButton>
+                                            }
+                                        >
                                             <AccordionHeader
-                                                className="py-0"
+                                                className={`py-0 ${openAccordion ? '' : 'border-b-transparent'}`}
                                                 onClick={() => setOpenAccordion((prevState) => !prevState)}
                                             >
-                                                <div className="flex text-xs font-bold px-6 py-3">
+                                                <div className="flex px-6 py-3 text-xs font-bold">
                                                     {currentUser.name}
                                                 </div>
                                             </AccordionHeader>
                                             <AccordionBody className="pt-0 text-sm font-normal">
                                                 <div className="border-b border-b-blue-gray-100">
-                                                    <Button fullWidth variant="text" className='flex'>
-                                                        profile
+                                                    <Button
+                                                        fullWidth
+                                                        variant="text"
+                                                        className="flex"
+                                                        onClick={() => {
+                                                            closeDrawer();
+                                                            navigate(routes.profile);
+                                                        }}
+                                                    >
+                                                        Profile
                                                     </Button>
                                                 </div>
                                                 <div className="border-b border-b-blue-gray-100">
-                                                    <Button fullWidth variant="text" className='flex'>
+                                                    <Button
+                                                        fullWidth
+                                                        variant="text"
+                                                        className="flex"
+                                                        onClick={() => {
+                                                            closeDrawer();
+                                                            navigate(routes.orders);
+                                                        }}
+                                                    >
                                                         Đơn hàng
                                                     </Button>
                                                 </div>
                                                 <div className="border-b border-b-blue-gray-100">
-                                                    <Button fullWidth variant="text" className='flex'>
+                                                    <Button
+                                                        fullWidth
+                                                        variant="text"
+                                                        className="flex"
+                                                        onClick={handleLogout}
+                                                    >
                                                         Đăng xuất
                                                     </Button>
                                                 </div>
                                             </AccordionBody>
                                         </Accordion>
                                     ) : (
-                                        <Link to={routes.login}>
-                                            <Button variant="gradient" color="blue" fullWidth>
-                                                <span className="line-clamp-1">Đăng nhập</span>
-                                            </Button>
-                                        </Link>
+                                        <Button
+                                            color="blue"
+                                            variant="gradient"
+                                            fullWidth
+                                            onClick={() => {
+                                                closeDrawer();
+                                                navigate(routes.login);
+                                            }}
+                                        >
+                                            <span className="line-clamp-1">Đăng nhập</span>
+                                        </Button>
                                     )}
                                 </li>
                             </ul>

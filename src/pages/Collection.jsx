@@ -1,7 +1,7 @@
 import CustomProductCard from '@/components/cards/CustomProductCard';
 import CustomFilter from '@/components/shared/CustomFilter';
 import { productService } from '@/services';
-import { Typography } from '@material-tailwind/react';
+import { Card, CardBody, Typography } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useParams } from 'react-router-dom';
@@ -55,19 +55,27 @@ function Collection() {
         <div className={'py-8'}>
             <div className="mx-auto flex w-full max-w-[1440px] flex-wrap gap-4 p-4 md:flex-nowrap">
                 <div className="w-full shrink-0 md:w-max">{filterMenu && <CustomFilter contents={filterMenu} />}</div>
-                <InfiniteScroll
-                    dataLength={products.length}
-                    next={handleInfiniteFetch}
-                    hasMore={true}
-                    loader={totalPages > currentPage ? <CustomProductCard /> : null}
-                    className="grid w-full grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
-                >
-                    {products.map((item, index) => (
-                        <CustomProductCard key={index} data={item} />
-                    ))}
-                </InfiniteScroll>
+                {products.length > 0 ? (
+                    <InfiniteScroll
+                        dataLength={products.length}
+                        next={handleInfiniteFetch}
+                        hasMore={true}
+                        loader={totalPages > currentPage ? <CustomProductCard /> : null}
+                        className="grid w-full grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+                    >
+                        {products.map((item, index) => (
+                            <CustomProductCard key={index} data={item} />
+                        ))}
+                    </InfiniteScroll>
+                ) : (
+                    <Card>
+                        <CardBody>
+                            <Typography>Không tìm thấy sản phẩm phù hợp</Typography>
+                        </CardBody>
+                    </Card>
+                )}
             </div>
-            {totalPages === currentPage && (
+            {totalPages === currentPage && products.length > 0 && (
                 <>
                     <hr className="mx-auto mt-16 w-full max-w-xs border-t border-blue-gray-100" />
                     <Typography className="mx-auto mb-16 mt-6 w-max text-center font-semibold">

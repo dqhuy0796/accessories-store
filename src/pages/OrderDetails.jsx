@@ -13,7 +13,7 @@ function OrderDetails() {
     const handleGetOrderByUuid = async (order_uuid) => {
         try {
             setLoading(true);
-            const response = await orderService.getOrderByUuidService(order_uuid);
+            const response = await orderService.getOneOrderByUuidService(order_uuid);
             if (response) {
                 const { code, message, result } = response;
                 if (code === 'SUCCESS') {

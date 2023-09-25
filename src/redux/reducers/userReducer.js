@@ -1,6 +1,7 @@
 import { UserActionTypes } from '../constants';
 
 const initState = {
+    darkmode: false,
     orders: [],
 };
 

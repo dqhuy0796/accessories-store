@@ -29,11 +29,27 @@ export const checkoutService = async (data) => {
     }
 };
 
-export const getOrderByUuidService = async (order_uuid) => {
+export const getOneOrderByUuidService = async (order_uuid) => {
     const path = 'order/get';
 
     const payload = {
         order_uuid,
+    };
+
+    try {
+        const result = await publicRequest.getApi(path, payload);
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const getOrdersByConditionService = async (order_uuids, phone_number) => {
+    const path = 'order/get';
+
+    const payload = {
+        encoded_uuids: order_uuids,
+        phone_number,
     };
 
     try {

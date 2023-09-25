@@ -3,6 +3,7 @@ import CustomSelectPaymentMethodCard from '@/components/cards/CustomSelectPaymen
 import CustomShippingAddressCard from '@/components/cards/CustomShippingAddressCard';
 import CustomCheckoutSuccessfullySection from '@/components/layouts/CustomCheckoutSuccessfullySection';
 import { cartItemRemoveAll } from '@/redux/actions/cartActions';
+import { userPlaceNewOrder } from '@/redux/actions/userAction';
 import { routes } from '@/routes';
 import { orderService } from '@/services';
 import { ShoppingBagIcon } from '@heroicons/react/24/outline';
@@ -14,7 +15,6 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function Checkout() {
     const [isLoading, setLoading] = useState(false);
-    const [successOrderUuid, setSuccessOrderUuid] = useState(null);
     const [allowCheckout, setAllowCheckout] = useState(false);
     const [customerPhoneNumber, setCustomerPhoneNumber] = useState('');
     const [shippingAddress, setShippingAddress] = useState({});
@@ -85,7 +85,8 @@ function Checkout() {
                 const { code, message, result } = response;
                 if (code === 'SUCCESS') {
                     dispatch(cartItemRemoveAll());
-                    setSuccessOrderUuid(result);
+                    dispatch(userPlaceNewOrder(result));
+                    navigate(routes.checkoutSuccess);
                 }
             }
         } catch (error) {

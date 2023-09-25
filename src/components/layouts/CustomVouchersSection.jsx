@@ -33,7 +33,7 @@ function CustomVouchersSection() {
                 Càng mua càng lời
             </Typography>
 
-            <div className="mx-auto mt-8 grid max-w-[1440px] gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div className="mx-auto p-4 mt-8 grid max-w-[1440px] gap-4 md:grid-cols-2 lg:grid-cols-4">
                 {vouchers.map((item, index) => (
                     <CustomVoucherCard
                         key={index}

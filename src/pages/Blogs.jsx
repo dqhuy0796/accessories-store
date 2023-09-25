@@ -1,5 +1,4 @@
 import CustomBlogCard from '@/components/cards/CustomBlogCard';
-import { Card, CardHeader, CardBody, CardFooter, Typography, Button } from '@material-tailwind/react';
 
 function Blogs() {
     const data = [
@@ -60,20 +59,17 @@ function Blogs() {
     ];
 
     return (
-        <div className="">
-            <div className="px-6">
-                <div className="py-6">
-                    <h1 className="py-[16px] text-center text-4xl font-bold">Our Blog</h1>
-                    <p className="text-center text-base">
-                        We use an agile approach to test assumptions and connect with the needs of your audience early
-                        and often.
-                    </p>
-                </div>
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-10">
-                    {data.map((item, index) => (
-                        <CustomBlogCard data={item} key={index} />
-                    ))}
-                </div>
+        <div>
+            <div className="py-6">
+                <p className="text-center text-base">
+                    We use an agile approach to test assumptions and connect with the needs of your audience early and
+                    often.
+                </p>
+            </div>
+            <div className="mx-auto grid w-full max-w-[1440px] gap-4 p-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+                {data.map((item, index) => (
+                    <CustomBlogCard data={item} key={index} />
+                ))}
             </div>
         </div>
     );

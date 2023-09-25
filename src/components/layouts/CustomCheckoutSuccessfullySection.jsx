@@ -15,12 +15,18 @@ function CustomCheckoutSuccessfullySection({ order_uuid }) {
                 </Typography>
                 <Typography as="h3" className="text-xl font-medium text-gray-500">
                     Mã đơn hàng:
-                    <Link to={routes.orderDetails.replace(':order_uuid', order_uuid)}>
-                        <strong className="ml-1 text-blue-600 hover:underline">{order_uuid}</strong>
-                    </Link>
+                    {order_uuid ? (
+                        <Link to={routes.orderDetails.replace(':order_uuid', order_uuid)}>
+                            <strong className="ml-1 text-blue-600 hover:underline">{order_uuid}</strong>
+                        </Link>
+                    ) : (
+                        <strong className="ml-1 text-blue-600 hover:underline">Đơn hàng không tồn tại</strong>
+                    )}
                 </Typography>
                 <Typography as="h3" className="text-center text-sm font-medium md:text-base">
-                    Nhân viên cửa hàng sẽ liên lạc với bạn trong thời gian sớm nhất!
+                    {order_uuid
+                        ? 'Nhân viên cửa hàng sẽ liên lạc với bạn trong thời gian sớm nhất!'
+                        : 'Vui lòng kiểm tra lại email xác nhận đơn hàng!'}
                 </Typography>
                 <div className="flex flex-wrap items-center justify-center gap-4 md:flex-nowrap">
                     <Link to={routes.orders}>
