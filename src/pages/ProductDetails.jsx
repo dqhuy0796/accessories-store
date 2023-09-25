@@ -7,6 +7,7 @@ import { productService } from '@/services';
 import { Accordion, AccordionBody, AccordionHeader, Button, Carousel, Typography } from '@material-tailwind/react';
 import { useParams } from 'react-router-dom';
 import CustomCarouselProductImages from '@/components/partials/CustomCarouselProductImages';
+import CustomProductTestimonialSection from '@/components/layouts/CustomProductTestimonialSection';
 
 function ProductDetails() {
     const [isLoading, setLoading] = useState(false);
@@ -92,9 +93,9 @@ function ProductDetails() {
                     </div>
                 </div>
             </div>
-            <div className="mx-auto grid max-w-[1440px] gap-6">
+            <div className="mx-auto grid max-w-[1440px] gap-4 md:grid-cols-2">
                 {productData && (
-                    <Accordion open={open === 1}>
+                    <Accordion className="md:col-span-2" open={open === 1}>
                         <AccordionHeader className="text-lg" onClick={() => handleOpen(1)}>
                             Chi tiết sản phẩm
                         </AccordionHeader>
@@ -107,6 +108,8 @@ function ProductDetails() {
                         </AccordionBody>
                     </Accordion>
                 )}
+
+                <CustomProductTestimonialSection />
 
                 <CustomRatingCountSection />
 

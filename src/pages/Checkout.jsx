@@ -1,14 +1,14 @@
+import CustomDeliveryServiceCard from '@/components/cards/CustomDeliveryServiceCard';
+import CustomOrderPackageCard from '@/components/cards/CustomOrderPackageCard';
 import CustomPaymentDetailsCard from '@/components/cards/CustomPaymentDetailsCard';
 import CustomSelectPaymentMethodCard from '@/components/cards/CustomSelectPaymentMethodCard';
-import CustomShippingAddressCard from '@/components/cards/CustomShippingAddressCard';
-import CustomCheckoutSuccessfullySection from '@/components/layouts/CustomCheckoutSuccessfullySection';
+import CustomSelectShippingAddressCard from '@/components/cards/CustomSelectShippingAddressCard';
+import CustomVoucherSubmitForm from '@/components/layouts/CustomVoucherSubmitForm';
 import { cartItemRemoveAll } from '@/redux/actions/cartActions';
 import { userPlaceNewOrder } from '@/redux/actions/userAction';
 import { routes } from '@/routes';
 import { orderService } from '@/services';
-import { ShoppingBagIcon } from '@heroicons/react/24/outline';
-import { CheckCircleIcon } from '@heroicons/react/24/solid';
-import { Button, Card, CardBody, Input, Spinner, Textarea, Typography } from '@material-tailwind/react';
+import { Button, Input, Spinner, Textarea, Typography } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -122,7 +122,10 @@ function Checkout() {
                         />
                     </div>
 
-                    <CustomShippingAddressCard data={shippingAddress} onChangeAddress={handleChangeShippingAddress} />
+                    <CustomSelectShippingAddressCard
+                        data={shippingAddress}
+                        onChangeAddress={handleChangeShippingAddress}
+                    />
 
                     <Textarea
                         color="blue"
@@ -132,11 +135,27 @@ function Checkout() {
                         onChange={(e) => setOrderNote(e.target.value)}
                     />
 
+                    <Typography className="text-xl font-semibold">Vận chuyển</Typography>
+
+                    <div className="rounded-lg border border-dashed border-blue-gray-100 p-4">
+                        <CustomDeliveryServiceCard />
+                    </div>
+
                     <CustomSelectPaymentMethodCard onChangePaymentMethod={handleChangePaymentMethod} />
                 </div>
 
                 <div className="flex flex-col gap-4 p-4">
-                    <CustomPaymentDetailsCard data={paymentDetails} />
+                    <div className="grid gap-4">
+                        <Typography as="h3" className="text-xl font-semibold">
+                            Tổng quan đơn hàng
+                        </Typography>
+
+                        <CustomOrderPackageCard data={cart.items} />
+
+                        <CustomVoucherSubmitForm />
+
+                        <CustomPaymentDetailsCard data={paymentDetails} />
+                    </div>
 
                     <Button
                         size="lg"

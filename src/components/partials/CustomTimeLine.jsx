@@ -1,51 +1,61 @@
-import React from 'react'
+import useVietnamDateTime from '@/hook/useVietnamDateTime';
+import { ArchiveBoxIcon, BellIcon, CheckCircleIcon, CurrencyDollarIcon } from '@heroicons/react/24/solid';
+import {
+    Timeline,
+    TimelineConnector,
+    TimelineHeader,
+    TimelineIcon,
+    TimelineItem,
+    Typography,
+} from '@material-tailwind/react';
 
-function CustomTimeLine() {
-
-    const data = [
-        {
-            createdAt: 'Thứ 2',
-            stateDesc: 'Xác nhận'
-        },
-        {
-            createdAt: 'Thứ 3',
-            stateDesc: 'Được gửi'
-        },
-        {
-            createdAt: 'Thứ 4',
-            stateDesc: 'Đang giao'
-        },
-        {
-            createdAt: 'Thứ 5',
-            stateDesc: 'Đang giao'
-        }
-    ]
-
-
+function CustomTimeLine({ data }) {
     const TimeNode = ({ data }) => {
+        const [date, time] = data ? useVietnamDateTime(data?.createdAt) : [0, 0];
+
         return (
-            <li className={`w-3/12 shrink-0 ${data ? "border-t-2 border-solid" : null}`}>
-                <div className='flex flex-col items-center text-[1.2rem] pb-5 md:text-[1.4rem] md:font-medium'>
-                    <span className='text-sm lg:text-base'>{data ? data.createdAt.slice(0, 10) : 'yyyy-MM-dd'}</span>
-                    <span>{data ? data.createdAt.slice(11, 16) : 'hh:mm'}</span>
+            <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-3 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
+                <TimelineIcon className="p-3" variant="ghost">
+                    <CheckCircleIcon className="h-5 w-5 text-green-600" />
+                </TimelineIcon>
+
+                <div className="grid gap-1">
+                    <Typography className="self-center text-xs font-semibold line-clamp-1">
+                        {time ? (
+                            <span className="flex gap-2">
+                                <span>{time}</span>
+                                <span>/</span>
+                                <span>{date}</span>
+                            </span>
+                        ) : (
+                            'Thời gian'
+                        )}
+                    </Typography>
+                    <Typography className="self-center text-sm font-bold line-clamp-1">
+                        {data.status_description ?? 'Trạng thái'}
+                    </Typography>
+                    <Typography className="self-center text-sm font-normal line-clamp-1">
+                        {data.description ?? 'Mô tả trạng thái'}
+                    </Typography>
                 </div>
-                <div className='flex justify-center relative text-[1.4rem] border-t-gray-600 pt-5 border-t-2 border-solid before:content-[" "] before:absolute before:top-[-15px] before:-translate-x-2/4 before:w-6 before:h-6 before:bg-[color:var(--color-white)] before:border before:border-[color:var(--color-border)] before:rounded-[50%] before:border-solid before:left-2/4 after:content-[" "] after:absolute after:-translate-x-2/4 after:-rotate-45 after:w-2.5 after:h-1.5 after:border-[color:var(--color-white)] after:border-r-[none] after:border-t-[none] after:border-[3px] after:border-solid after:left-2/4 after:-top-2 md:text-[1.6rem] md:font-medium;'>
-                    <span className='text-xs lg:text-lg'>{data ? data.stateDesc : 'Đang chờ'}</span>
-                </div>
-            </li>
+            </TimelineHeader>
         );
     };
 
     return (
-        <ul className='list-none flex items-end justify-between w-full my-4'>
-            {data.map((item, index) => (
-                <TimeNode key={index} data={item} />
-            ))}
-            {[1, 2, 3, 4].slice(0, 4 - data.length).map((index) => (
-                <TimeNode key={index} />
-            ))}
-        </ul>
+        <div className="">
+            <Timeline>
+                {data &&
+                    data.length > 0 &&
+                    data.map((node, index) => (
+                        <TimelineItem key={index} className="h-28">
+                            <TimelineConnector className="!w-[78px]" />
+                            <TimeNode data={node} />
+                        </TimelineItem>
+                    ))}
+            </Timeline>
+        </div>
     );
 }
 
-export default CustomTimeLine
+export default CustomTimeLine;
