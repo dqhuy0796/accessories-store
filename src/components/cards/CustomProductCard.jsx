@@ -16,8 +16,8 @@ export function CustomProductCard({ data }) {
     };
 
     return data ? (
-        <div className="p-0.5 rounded hover:shadow-all hover:shadow-gray-300/50">
-            <div className="group z-0 relative w-full overflow-hidden pt-[calc(100%*4/3)]">
+        <div className="rounded p-0.5 hover:shadow-all hover:shadow-gray-300/50">
+            <div className="group relative z-0 w-full overflow-hidden pt-[calc(100%*4/3)]">
                 <div className="absolute inset-x-0 bottom-0 translate-y-full p-3 transition-all duration-300 ease-in-out group-hover:translate-y-0">
                     <Button
                         color="white"
@@ -36,7 +36,9 @@ export function CustomProductCard({ data }) {
             </div>
             <div className="flex flex-col items-center justify-center gap-2 p-2">
                 <Link to={routes.productDetail.replace(':slug', data.slug)}>
-                    <Typography className="font-semibold hover:text-blue-600 hover:underline">{data.name}</Typography>
+                    <Typography className="font-semibold line-clamp-1 hover:text-blue-600 hover:underline">
+                        {data.name}
+                    </Typography>
                 </Link>
                 <CustomCurrencyDisplay className={'text-sm font-medium text-red-500'} value={data.price} />
             </div>

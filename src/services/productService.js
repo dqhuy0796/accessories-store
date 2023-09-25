@@ -74,43 +74,16 @@ export const getProductBySlugService = async (slug) => {
     }
 };
 
-/** AUTHORIZATION */
+export const searchProductsService = async (keyword, page) => {
+    const path = 'product/search';
 
-const accessToken = store.getState().auth.accessToken;
-
-export const createProductService = async (data) => {
-    const path = 'product/create';
-
-    const payload = data;
-
-    try {
-        const result = await authorizationRequest.postApi(path, payload, accessToken);
-        return result;
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-export const updateProductService = async (data) => {
-    const path = 'product/update';
-
-    const payload = data;
+    const payload = {
+        keyword,
+        page,
+    };
 
     try {
-        const result = await authorizationRequest.putApi(path, payload, accessToken);
-        return result;
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-export const deleteProductService = async (data) => {
-    const path = 'product/delete';
-
-    const payload = data;
-
-    try {
-        const result = await authorizationRequest.deleteApi(path, payload, accessToken);
+        const result = await publicRequest.getApi(path, payload);
         return result;
     } catch (error) {
         console.log(error);

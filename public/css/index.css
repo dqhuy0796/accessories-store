@@ -55,6 +55,10 @@ input[type='search']::-ms-clear {
     animation: slide 0.3s ease;
 }
 
+.animation-dropdown {
+    animation: drop-down 0.3s ease;
+}
+
 @keyframes float {
     0% {
         opacity: 0.05;
@@ -74,6 +78,17 @@ input[type='search']::-ms-clear {
     100% {
         opacity: 1;
         transform: translateX(0);
+    }
+}
+
+@keyframes drop-down {
+    0% {
+        opacity: 0.05;
+        transform: translateY(-16px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
