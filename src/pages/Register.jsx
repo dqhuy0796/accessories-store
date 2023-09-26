@@ -175,7 +175,7 @@ function Register() {
                                             size="lg"
                                             color="blue"
                                             label={item.label}
-                                            pattern={item.pattern ?? ''}
+                                            pattern={item.pattern ?? null}
                                             value={userData[item.key] ?? ''}
                                             type={showPassword ? 'text' : 'password'}
                                             onChange={(e) => handleOnChange(item.key, e.target.value)}
@@ -197,7 +197,7 @@ function Register() {
                                             color="blue"
                                             type={item.type}
                                             label={item.label}
-                                            pattern={item.pattern ?? ''}
+                                            pattern={item.pattern ?? null}
                                             value={userData[item.key] ?? ''}
                                             onChange={(e) => handleOnChange(item.key, e.target.value)}
                                             required={item.require}

@@ -99,7 +99,7 @@ export function CustomUserEditorForm({ data, isCreate, onChange }) {
                                   color="blue"
                                   type={item.type}
                                   label={item.label}
-                                  pattern={item.pattern ?? ''}
+                                  pattern={item.pattern ?? null}
                                   value={data[item.key] ?? ''}
                                   onChange={(e) => onChange(item.key, e.target.value)}
                                   readOnly={item.readOnly && !isCreate ? true : false}
@@ -130,7 +130,7 @@ export function CustomUserEditorForm({ data, isCreate, onChange }) {
                                           color="blue"
                                           type={item.type}
                                           label={item.label}
-                                          pattern={item.pattern ?? ''}
+                                          pattern={item.pattern ?? null}
                                           value={data[item.key] ?? ''}
                                           onChange={(e) => onChange(item.key, e.target.value)}
                                           readOnly={item.readOnly && !isCreate ? true : false}
