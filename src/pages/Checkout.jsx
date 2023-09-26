@@ -116,6 +116,7 @@ function Checkout() {
                             size="lg"
                             color="blue"
                             label="Số diện thoại"
+                            pattern="0+[0-9]{9}"
                             value={customerPhoneNumber}
                             readOnly={isLogged}
                             onChange={(e) => setCustomerPhoneNumber(e.target.value)}

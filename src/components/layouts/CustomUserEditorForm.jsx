@@ -60,6 +60,7 @@ export function CustomUserEditorForm({ data, isCreate, onChange }) {
                     key: 'phone_number',
                     type: 'tel',
                     label: 'Số điện thoại',
+                    pattern: '0+[0-9]{9}',
                     readOnly: true,
                 },
                 {
@@ -71,6 +72,7 @@ export function CustomUserEditorForm({ data, isCreate, onChange }) {
                 {
                     key: 'password',
                     type: 'password',
+                    pattern: '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}',
                     label: 'Mật khẩu',
                     readOnly: true,
                 },
@@ -97,13 +99,14 @@ export function CustomUserEditorForm({ data, isCreate, onChange }) {
                                   color="blue"
                                   type={item.type}
                                   label={item.label}
+                                  pattern={item.pattern ?? ''}
                                   value={data[item.key] ?? ''}
                                   onChange={(e) => onChange(item.key, e.target.value)}
                                   readOnly={item.readOnly && !isCreate ? true : false}
                               />
                           ))
                         : items.map((item) => (
-                              <div key={item.key} className="flex items-end justify-between pl-1 gap-2">
+                              <div key={item.key} className="flex items-end justify-between gap-2 pl-1">
                                   {item.readOnly && !isCreate ? (
                                       <>
                                           <CustomUserDetailsItem
@@ -127,6 +130,7 @@ export function CustomUserEditorForm({ data, isCreate, onChange }) {
                                           color="blue"
                                           type={item.type}
                                           label={item.label}
+                                          pattern={item.pattern ?? ''}
                                           value={data[item.key] ?? ''}
                                           onChange={(e) => onChange(item.key, e.target.value)}
                                           readOnly={item.readOnly && !isCreate ? true : false}

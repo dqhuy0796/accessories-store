@@ -116,6 +116,7 @@ function Register() {
             key: 'phone_number',
             label: 'Số điện thoại',
             type: 'tel',
+            pattern: '0+[0-9]{9}',
             require: true,
         },
         {
@@ -128,6 +129,7 @@ function Register() {
             key: 'password',
             label: 'Mật khẩu',
             type: 'password',
+            pattern: '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}',
             require: true,
         },
 
@@ -135,6 +137,7 @@ function Register() {
             key: 'confirm_password',
             label: 'Xác nhận mật khẩu',
             type: 'password',
+            pattern: '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}',
             require: true,
         },
         {
@@ -172,6 +175,7 @@ function Register() {
                                             size="lg"
                                             color="blue"
                                             label={item.label}
+                                            pattern={item.pattern ?? ''}
                                             value={userData[item.key] ?? ''}
                                             type={showPassword ? 'text' : 'password'}
                                             onChange={(e) => handleOnChange(item.key, e.target.value)}
@@ -193,6 +197,7 @@ function Register() {
                                             color="blue"
                                             type={item.type}
                                             label={item.label}
+                                            pattern={item.pattern ?? ''}
                                             value={userData[item.key] ?? ''}
                                             onChange={(e) => handleOnChange(item.key, e.target.value)}
                                             required={item.require}

@@ -93,9 +93,10 @@ function Login() {
                                 onChange={(e) => setUsername(e.target.value)}
                             />
                             <Input
+                                size="lg"
                                 type={showPassword ? 'text' : 'password'}
                                 label="Mật khẩu"
-                                size="lg"
+                                pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 icon={
